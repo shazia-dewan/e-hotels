@@ -4,6 +4,85 @@ drop table if it exists Customers
 drop table if it exists BookingArchive
 drop table if it exists RentingArchive
 
+--HotelChain Table Structure
+Create Table HotelChain(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	num_hotels int CHECK (num_hotels BETWEEN 1 AND 1000),
+	email VARCHAR(255) CHECK (email like '%@%'),
+	street VARCHAR(100) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+    province VARCHAR(100) NOT NULL,
+    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
+	PRIMARY KEY (hotelChainID)
+);
+
+INSERT INTO HotelChain(hotelChainID,num_hotels,email,street,city,province, PostalCode)
+VALUES
+    (1, 12,'hotel1@gmail.com','123 XYZ Street', 'Ottawa','ONTARIO','A3S0G9'),
+	(2, 14,'hotel2@gmail.com','345 Queen Street', 'Toronto','ONTARIO','B7S9G8'),
+	(3, 18,'hotel3@gmail.com','123 Elm Street', 'Victoria','British Columbia','C9R0G9'),
+	(4, 19,'hotel4@gmail.com','769 ABC Street', 'Ottawa','ONTARIO','A8B3V8'),
+	(5, 13,'hotel5@gmail.com','475 Zero Street', 'London','ONTARIO','P4Q9G9');
+
+--Table Structure Hotel
+CREATE TABLE Hotel (
+    hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
+    hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+    num_rooms int CHECK (num_rooms BETWEEN 1 AND 100),
+    email VARCHAR(255) CHECK (email like '%@%'),
+    star_rating int CHECK (star_rating >= 1 AND star_rating <= 5),
+    street VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    province VARCHAR(100) NOT NULL,
+    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
+    PRIMARY KEY (hotelID, hotelChainID),
+	FOREIGN KEY (hotelChainID)
+	REFERENCES HotelChain
+);
+
+INSERT INTO Hotel(hotelID, hotelChainID, num_rooms,email,star_rating,street,city,province, PostalCode)
+VALUES
+    (1, 1, 60, 'hotel11@gmail.com', 3, '123 Main St', 'Cityville', 'North America', '12345'),
+	(2, 1, 80, 'hotel21@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '23456'),
+	(3, 2, 90, 'hotel32@gmail.com', 3, '789 Oak St', 'Villageton', 'North America', '34567'),
+	(4, 2, 100, 'hotel42@gmail.com', 4, '987 Pine St', 'Hamletville', 'North America', '45678'),
+	(5, 3, 100, 'hotel53@gmail.com', 5, '654 Cedar St', 'Ruraltown', 'North America', '56789');
+
+--Table Structure HotelChain_PhoneNumber
+Create Table HotelChain_PhoneNumber(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	PhoneNumber NUMERIC(10,0) Not Null,
+	Primary Key (hotelChainID, PhoneNumber),
+	FOREIGN KEY (hotelChainID)
+	References HotelChain
+);
+
+INSERT INTO HotelChain_PhoneNumber(hotelChainID, PhoneNumber)
+VALUES
+    (1,123456789),
+	(2,231456789),
+	(3,321456789),
+	(4,412356789),
+	(5,512346789);
+
+--Table Structure:Hotel_PhoneNumber
+Create Table Hotel_PhoneNumber(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	PhoneNumber NUMERIC(10,0) Not Null,
+	hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
+	Primary Key (hotelChainID, PhoneNumber,hotelID),
+	FOREIGN KEY(hotelID,hotelChainID)
+	References Hotel
+);
+
+INSERT INTO Hotel_PhoneNumber(hotelID,hotelChainID,PhoneNumber)
+VALUES
+    (1,1,133456789),
+	(2,1,221456789),
+	(3,2,331456789),
+	(4,2,442356789),
+	(5,3,552346789);
+
 --Table Structure:Employees
 CREATE TABLE Employee (
     SSN_SIN NUMERIC(9,0) PRIMARY KEY CHECK (SSN_SIN > 0),,

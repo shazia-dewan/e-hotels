@@ -3,6 +3,11 @@ drop table if it exists Employees
 drop table if it exists Customers
 drop table if it exists BookingArchive
 drop table if it exists RentingArchive
+drop table if it exists Hotel
+drop table if it exists HotelChain
+drop table if it exists Hotel_PhoneNumber
+drop table if it exists HotelChain_PhoneNumber
+
 
 --HotelChain Table Structure
 Create Table HotelChain(

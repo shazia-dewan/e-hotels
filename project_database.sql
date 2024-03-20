@@ -83,6 +83,156 @@ VALUES
 	(4,2,442356789),
 	(5,3,552346789);
 
+--HotelChain Table Structure
+Create Table HotelChain(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	num_hotels int CHECK (num_hotels BETWEEN 1 AND 1000),
+	email VARCHAR(255) CHECK (email like '%@%'),
+	street VARCHAR(100) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+    province VARCHAR(100) NOT NULL,
+    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
+	PRIMARY KEY (hotelChainID)
+);
+
+INSERT INTO HotelChain(hotelChainID,num_hotels,email,street,city,province, PostalCode)
+VALUES
+    (1, 9,'hotel1@gmail.com','123 XYZ Street', 'Ottawa','ONTARIO','A3S0G9'),
+	(2, 8,'hotel2@gmail.com','345 Queen Street', 'Toronto','ONTARIO','B7S9G8'),
+	(3, 8,'hotel3@gmail.com','123 Elm Street', 'Victoria','British Columbia','C9R0G9'),
+	(4, 8,'hotel4@gmail.com','769 ABC Street', 'Ottawa','ONTARIO','A8B3V8'),
+	(5, 10,'hotel5@gmail.com','475 Zero Street', 'London','ONTARIO','P4Q9G9');
+
+--Table Structure Hotel
+CREATE TABLE Hotel (
+    hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
+    hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+    num_rooms int CHECK (num_rooms BETWEEN 1 AND 100),
+    email VARCHAR(255) CHECK (email like '%@%'),
+    star_rating int CHECK (star_rating >= 1 AND star_rating <= 5),
+    street VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    province VARCHAR(100) NOT NULL,
+    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
+    PRIMARY KEY (hotelID, hotelChainID),
+	FOREIGN KEY (hotelChainID)
+	REFERENCES HotelChain
+);
+
+INSERT INTO Hotel(hotelID, hotelChainID, num_rooms,email,star_rating,street,city,province, PostalCode)
+VALUES
+    (1, 1, 60, 'hotel11@gmail.com', 3, '123 Main St', 'Cityville', 'North America', '123458'),
+	(2, 1, 80, 'hotel21@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '23456'),
+	(3, 1, 90, 'hotel31@gmail.com', 3, '789 Silver St', 'Brockville', 'North America', '123567'),
+	(4, 1, 100, 'hotel41@gmail.com', 4, '987 Pine St', 'Hamletville', 'North America', '45678'),
+	(5, 1, 100, 'hotel51@gmail.com', 5, '654 Cedar St', 'Ruraltown', 'North America', '56789'),
+	(6, 1, 60, 'hotel61@gmail.com', 3, '133 Main St', 'Cityville', 'North America', '123458'),
+    (7, 1, 80, 'hotel71@gmail.com', 5, '466 llm St', 'Brownsville', 'North America', '234566'),
+    (8, 1, 90, 'hotel81@gmail.com', 3, '899 Oak St', 'Villageton', 'North America', '34567'),
+    (1, 2, 60, 'hotel12@gmail.com', 3, '133 Main St', 'Cityville', 'North America', '12346'),
+	(2, 2, 80, 'hotel22@gmail.com', 5, '466 Elm St', 'Townsville', 'North America', '23457'),
+	(3, 2, 90, 'hotel32@gmail.com', 3, '780 Oak St', 'Villageton', 'North America', '34568'),
+	(4, 2, 100, 'hotel42@gmail.com', 4, '987 Cedar St', 'Ruraltown', 'North America', '45679'),
+	(5, 2, 100, 'hotel52@gmail.com', 5, '989 Cedar St', 'Ruraltown', 'North America', '45679'),
+	(6, 2, 100, 'hotel62@gmail.com', 4, '988 Pine St', 'Hamletville', 'North America', '45670'),
+    (7, 2, 100, 'hotel72@gmail.com', 5, '655 Aedar St', 'Ruraltown', 'North America', '56780'),
+	(8, 2, 100, 'hotel82@gmail.com', 5, '654 Brock St', 'Ruraltown', 'North America', '56781'),
+	(1, 3, 60, 'hotel13@gmail.com', 3, '123 Main St', 'Cityville', 'North America', '12349'),
+    (2, 3, 80, 'hotel23@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '23450'),
+    (3, 3, 90, 'hotel33@gmail.com', 3, '789 Empire St', 'Villageton', 'North America', '34569'),
+    (4, 3, 100, 'hotel43@gmail.com', 4, '986 Cedar St', 'Ruraltown', 'North America', '45670'),
+    (5, 3, 100, 'hotel53@gmail.com', 5, '988 Cedar St', 'Ruraltown', 'North America', '45670'),
+    (6, 3, 100, 'hotel63@gmail.com', 4, '987 Pine St', 'Hamletville', 'North America', '45688'),
+    (7, 3, 100, 'hotel73@gmail.com', 5, '654 Aedar St', 'Ruraltown', 'North America', '56782'),
+    (8, 3, 60, 'hotel83@gmail.com', 3, '124 Brock St', 'Cityville', 'North America', '12348'),
+    (1, 4, 60, 'hotel14@gmail.com', 3, '123 Main St', 'Cityville', 'North America', '11335'),
+    (2, 4, 80, 'hotel24@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '22446'),
+    (3, 4, 90, 'hotel34@gmail.com', 3, '789 Brock St', 'Villageton', 'North America', '33557'),
+    (4, 4, 100, 'hotel44@gmail.com', 4, '912 Cedar St', 'Ruraltown', 'North America', '44678'),
+    (5, 4, 100, 'hotel54@gmail.com', 5, '913 Cedar St', 'Ruraltown', 'North America', '44678'),
+    (6, 4, 100, 'hotel64@gmail.com', 4, '987 Pine St', 'Hamletville', 'North America', '44678'),
+    (7, 4, 100, 'hotel74@gmail.com', 5, '654 Empire St', 'Ruraltown', 'North America', '57799'),
+    (8, 4, 60, 'hotel84@gmail.com', 3, '178 Brock St', 'Cityville', 'North America', '12289'),
+    (1, 5, 80, 'hotel15@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '17456'),
+    (2, 5, 90, 'hotel25@gmail.com', 3, '789 Main St', 'Villageton', 'North America', '24567'),
+    (3, 5, 100, 'hotel35@gmail.com', 4, '914 Cedar St', 'Ruraltown', 'North America', '45579'),
+    (4, 5, 100, 'hotel45@gmail.com', 5, '915 Cedar St', 'Ruraltown', 'North America', '45579'),
+    (5, 5, 100, 'hotel55@gmail.com', 4, '427 Pine St', 'Hamletville', 'North America', '34678'),
+    (6, 5, 100, 'hotel65@gmail.com', 5, '800 Natural St', 'Newtown', 'North America', '36789'),
+    (7, 5, 100, 'hotel75@gmail.com', 5, '196 East St', 'Urbantown', 'North America', '32789'),
+    (8, 5, 100, 'hotel85@gmail.com', 5, '111 Brock St', 'Brockville', 'North America', '33789');
+
+--Table Structure HotelChain_PhoneNumber
+Create Table HotelChain_PhoneNumber(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	PhoneNumber NUMERIC(10,0) Not Null,
+	Primary Key (hotelChainID, PhoneNumber),
+	FOREIGN KEY (hotelChainID)
+	References HotelChain
+);
+
+INSERT INTO HotelChain_PhoneNumber(hotelChainID, PhoneNumber)
+VALUES
+    (1,123456789),
+	(2,231456789),
+	(3,321456789),
+	(4,412356789),
+	(5,512346789);
+
+--Table Structure:Hotel_PhoneNumber
+Create Table Hotel_PhoneNumber(
+	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
+	PhoneNumber NUMERIC(10,0) Not Null,
+	hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
+	Primary Key (hotelChainID, PhoneNumber,hotelID),
+	FOREIGN KEY(hotelID,hotelChainID)
+	References Hotel
+);
+
+INSERT INTO Hotel_PhoneNumber(hotelID,hotelChainID,PhoneNumber)
+VALUES
+    (1,1,100000009),
+	(2,1,100000008),
+	(3,1,100000007),
+	(4,1,100000006),
+	(5,1,100000005),
+	(6,1,100000004),
+    (7,1,100000003),
+    (8,1,100000002),
+    (1,2,200000009),
+   	(2,2,200000008),
+   	(3,2,200000007),
+   	(4,2,200000006),
+   	(5,2,200000005),
+   	(6,2,200000004),
+    (7,2,200000003),
+    (8,2,200000002),
+    (1,3,300000009),
+    (2,3,300000008),
+    (3,3,300000007),
+    (4,3,300000006),
+    (5,3,300000005),
+    (6,3,300000004),
+    (7,3,300000003),
+    (8,3,300000002),
+    (1,4,400000009),
+    (2,4,400000008),
+    (3,4,400000007),
+    (4,4,400000006),
+    (5,4,400000005),
+    (6,4,400000004),
+    (7,4,400000003),
+    (8,4,400000002),
+    (1,5,500000009),
+    (2,5,500000008),
+    (3,5,500000007),
+    (4,5,500000006),
+    (5,5,500000005),
+    (6,5,500000004),
+    (7,5,500000003),
+    (8,5,500000002);
+
+
 --Table Structure:Employees
 CREATE TABLE Employee (
     SSN_SIN NUMERIC(9,0) PRIMARY KEY CHECK (SSN_SIN > 0),,
@@ -184,13 +334,3 @@ FROM Room;
 SELECT hotelID, COUNT(*) AS num_bookings
 FROM Booking
 GROUP BY hotelID;
-
-
-
-
-
-
-
-
-
-

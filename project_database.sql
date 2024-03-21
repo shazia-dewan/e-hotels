@@ -219,7 +219,7 @@ VALUES
 --Table structure:Booking archive
 CREATE TABLE BookingArchive (
     booking_ID NUMERIC(9,0) PRIMARY KEY CHECK (booking_ID > 0),
-    Date DATE NOT NULL,
+    booking_date DATE NOT NULL,
     Customer_first_name VARCHAR(50) NOT NULL,
     Customer_middle_name VARCHAR(50),
     Customer_last_name VARCHAR(50) NOT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE BookingArchive (
 );
 
 --Sample booking archive
-INSERT INTO BookingArchive (booking_ID, Date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
+INSERT INTO BookingArchive (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
 VALUES
     (567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1),
     (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2),
@@ -553,7 +553,7 @@ VALUES
 --Table structure: Booking
 CREATE TABLE Booking(
 	booking_ID NUMERIC(9,0) PRIMARY KEY CHECK (booking_ID > 0),
-    Date DATE NOT NULL,
+    booking_date DATE NOT NULL,
     Customer_first_name VARCHAR(50) NOT NULL,
     Customer_middle_name VARCHAR(50),
     Customer_last_name VARCHAR(50) NOT NULL,
@@ -564,7 +564,7 @@ CREATE TABLE Booking(
 );
 
 --sample bookings
-INSERT INTO Booking (booking_ID, Date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment)
+INSERT INTO Booking (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment)
 VALUES
 	(567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1, 'Credit Card'),
     (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2, 'Cash'),
@@ -591,4 +591,43 @@ AND amenities_fridge=true AND amenities_toiletries=true;
 SELECT room_number
 FROM Room
 WHERE price < 500.00;
+
+
+
+--Modifications (triggers)
+
+-- Trigger to ensure a room cannot be booked if it's already reserved for that specific date 
+CREATE OR REPLACE FUNCTION prevent_double_booking()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM Booking
+        WHERE room_number = NEW.room_number
+        AND booking_date = NEW.check_in_date
+        AND booking_id <> NEW.booking_id -- Exclude current booking from check
+    ) THEN
+        RAISE EXCEPTION 'Room is already booked for the specified date';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_update_booking_double_booking
+BEFORE UPDATE ON Booking
+FOR EACH ROW
+EXECUTE FUNCTION prevent_double_booking();
+
+--Indexes
+
+CREATE INDEX idx_booking_date ON Booking (booking_date);
+/*This index would be beneficial for queries that involve filtering or sorting bookings by date. For example, when retrieving bookings for a specific date range or when sorting bookings by date.
+Accelerates queries such as finding available rooms for a given date, checking booking history for a particular date, or analyzing booking trends over time. */
+
+--Views
+
+--View 2: Aggregated capacity of all the rooms in a specific hotel
+CREATE VIEW RoomCapacity AS
+SELECT hotelChainID, hotelID, SUM(guest_capacity) AS total_capacity
+FROM Room
+GROUP BY hotelChainID, hotelID;
 

@@ -1,95 +1,15 @@
 --Cleaning database
-drop table if it exists Employees
-drop table if it exists Customers
-drop table if it exists BookingArchive
-drop table if it exists RentingArchive
-drop table if it exists Hotel
-drop table if it exists HotelChain
-drop table if it exists Hotel_PhoneNumber
-drop table if it exists HotelChain_PhoneNumber
-drop table if it exists Room
-drop table if it exists Renting
-drop table if it exists Booking
-
-
---HotelChain Table Structure
-Create Table HotelChain(
-	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
-	num_hotels int CHECK (num_hotels BETWEEN 1 AND 1000),
-	email VARCHAR(255) CHECK (email like '%@%'),
-	street VARCHAR(100) NOT NULL,
-	city VARCHAR(100) NOT NULL,
-    province VARCHAR(100) NOT NULL,
-    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
-	PRIMARY KEY (hotelChainID)
-);
-
-INSERT INTO HotelChain(hotelChainID,num_hotels,email,street,city,province, PostalCode)
-VALUES
-    (1, 12,'hotel1@gmail.com','123 XYZ Street', 'Ottawa','ONTARIO','A3S0G9'),
-	(2, 14,'hotel2@gmail.com','345 Queen Street', 'Toronto','ONTARIO','B7S9G8'),
-	(3, 18,'hotel3@gmail.com','123 Elm Street', 'Victoria','British Columbia','C9R0G9'),
-	(4, 19,'hotel4@gmail.com','769 ABC Street', 'Ottawa','ONTARIO','A8B3V8'),
-	(5, 13,'hotel5@gmail.com','475 Zero Street', 'London','ONTARIO','P4Q9G9');
-
---Table Structure Hotel
-CREATE TABLE Hotel (
-    hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
-    hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
-    num_rooms int CHECK (num_rooms BETWEEN 1 AND 100),
-    email VARCHAR(255) CHECK (email like '%@%'),
-    star_rating int CHECK (star_rating >= 1 AND star_rating <= 5),
-    street VARCHAR(100) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    province VARCHAR(100) NOT NULL,
-    PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
-    PRIMARY KEY (hotelID, hotelChainID),
-	FOREIGN KEY (hotelChainID)
-	REFERENCES HotelChain
-);
-
-INSERT INTO Hotel(hotelID, hotelChainID, num_rooms,email,star_rating,street,city,province, PostalCode)
-VALUES
-    (1, 1, 60, 'hotel11@gmail.com', 3, '123 Main St', 'Cityville', 'North America', '12345'),
-	(2, 1, 80, 'hotel21@gmail.com', 5, '456 Elm St', 'Townsville', 'North America', '23456'),
-	(3, 2, 90, 'hotel32@gmail.com', 3, '789 Oak St', 'Villageton', 'North America', '34567'),
-	(4, 2, 100, 'hotel42@gmail.com', 4, '987 Pine St', 'Hamletville', 'North America', '45678'),
-	(5, 3, 100, 'hotel53@gmail.com', 5, '654 Cedar St', 'Ruraltown', 'North America', '56789');
-
---Table Structure HotelChain_PhoneNumber
-Create Table HotelChain_PhoneNumber(
-	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
-	PhoneNumber NUMERIC(10,0) Not Null,
-	Primary Key (hotelChainID, PhoneNumber),
-	FOREIGN KEY (hotelChainID)
-	References HotelChain
-);
-
-INSERT INTO HotelChain_PhoneNumber(hotelChainID, PhoneNumber)
-VALUES
-    (1,123456789),
-	(2,231456789),
-	(3,321456789),
-	(4,412356789),
-	(5,512346789);
-
---Table Structure:Hotel_PhoneNumber
-Create Table Hotel_PhoneNumber(
-	hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
-	PhoneNumber NUMERIC(10,0) Not Null,
-	hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
-	Primary Key (hotelChainID, PhoneNumber,hotelID),
-	FOREIGN KEY(hotelID,hotelChainID)
-	References Hotel
-);
-
-INSERT INTO Hotel_PhoneNumber(hotelID,hotelChainID,PhoneNumber)
-VALUES
-    (1,1,133456789),
-	(2,1,221456789),
-	(3,2,331456789),
-	(4,2,442356789),
-	(5,3,552346789);
+drop table if exists Employee cascade;
+drop table if exists Customer cascade;
+drop table if exists BookingArchive cascade;
+drop table if exists RentingArchive cascade;
+drop table if exists Hotel cascade;
+drop table if exists HotelChain cascade;
+drop table if exists Hotel_PhoneNumber cascade;
+drop table if exists HotelChain_PhoneNumber cascade;
+drop table if exists Room cascade;
+drop table if exists Renting cascade;
+drop table if exists Booking cascade;
 
 --HotelChain Table Structure
 Create Table HotelChain(
@@ -241,25 +161,26 @@ VALUES
     (8,5,500000002);
 
 
---Table Structure:Employees
+--Table Structure:Employee
 CREATE TABLE Employee (
-    SSN_SIN NUMERIC(9,0) PRIMARY KEY CHECK (SSN_SIN > 0),,
-    HotelID INT CHECK (HotelID BETWEEN 1 AND 1000),
-    HotelChainID INT CHECK (HotelChainID BETWEEN 1 AND 5),
+    SSN_SIN NUMERIC(9,0) PRIMARY KEY CHECK (SSN_SIN > 0),
+    hotelID INT NOT NULL CHECK (hotelID BETWEEN 1 AND 1000),
+    hotelChainID INT NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     street VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
-   	province_state VARCHAR(100) NOT NULL,
+    province_state VARCHAR(100) NOT NULL,
     postal_code_zip_code VARCHAR(20) NOT NULL,
     Roles_chef BOOLEAN,
     Roles_maintenanceTechnician BOOLEAN,
     Roles_receptionist BOOLEAN,
     Roles_hotelKeeper BOOLEAN,
-    FOREIGN KEY (HotelID) REFERENCES Hotel(hotel_id),
-    FOREIGN KEY (HotelChainID) REFERENCES HotelChain(chain_id)
+    FOREIGN KEY (hotelID, hotelChainID) REFERENCES Hotel(hotelID, hotelChainID),
+    FOREIGN KEY (hotelChainID) REFERENCES HotelChain(hotelChainID)
 );
+
 
 -- Sample Employees
 INSERT INTO Employee (SSN_SIN, HotelID, HotelChainID, first_name, middle_name, last_name, street, city, province_state, postal_code_zip_code, Roles_chef, Roles_maintenanceTechnician, Roles_receptionist, Roles_hotelKeeper)
@@ -281,9 +202,10 @@ CREATE TABLE Customer (
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
     last_name VARCHAR(50) NOT NULL,
-    DateofRegistration DATE CHECK (LENGTH(DateofRegistration) = 10),
-    CONSTRAINT valid_dateofregistration CHECK (TO_DATE(DateofRegistration, 'dd-mm-yyyy') IS NOT NULL)
+    DateofRegistration DATE CHECK (DateofRegistration IS NOT NULL), -- Ensure DateofRegistration is not null
+    CONSTRAINT valid_dateofregistration CHECK (DateofRegistration::TEXT ~ '^\d{4}-\d{2}-\d{2}$') -- Check format (YYYY-MM-DD)
 );
+
 
 --Sample customers 
 INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration)
@@ -342,7 +264,7 @@ CREATE TABLE Room (
 	problems_electrical BOOLEAN,
 	problems_furniture BOOLEAN,
 	problems_other VARCHAR(255),
-	price DECIMAL(6,2) CHECK (price BETWEEN 100.00 AND 1000.00),
+	price DECIMAL(6,2) CHECK (price BETWEEN 100.00 AND 10000.00),
 	amenities_tv BOOLEAN,
 	amenities_wifi BOOLEAN,
 	amenities_air_con BOOLEAN,
@@ -355,15 +277,15 @@ CREATE TABLE Room (
 	mountain_view BOOLEAN,
 	extendable BOOLEAN,
 	not_extendable BOOLEAN,
-	FOREIGN KEY (HotelID) REFERENCES Hotel(hotel_id),
-    FOREIGN KEY (HotelChainID) REFERENCES HotelChain(chain_id)
+    FOREIGN KEY (hotelID, hotelChainID) REFERENCES Hotel(hotelID, hotelChainID),
+    FOREIGN KEY (hotelChainID) REFERENCES HotelChain(hotelChainID)
 );
 
 --sample rooms
 INSERT INTO Room (room_number,  HotelID, HotelChainID, problems_water, problems_electrical, problems_furniture,
 				 problems_other, price, amenities_tv, amenities_wifi, amenities_air_con, amenities_fridge,
 				 amenities_toiletries, capacities_single, capacities_double, guest_capacity, sea_view, mountain_view,
-				 extendable, non_extendable) VALUES
+				 extendable, not_extendable) VALUES
 				 (10001, 1, 1, true, false, false, NULL, 110.50, true, true, true, true, true, true, false, 1, true, false, true, false),
 				 (10002, 1, 1, true, true, false, NULL, 500.00, false, true, true, true, true, true, false, 2, true, false, false, true),
                  (10003, 1, 1, false, false, true, NULL, 245.50, true, false, false, true, true, false, true, 3, false, true, false, true),
@@ -374,13 +296,13 @@ INSERT INTO Room (room_number,  HotelID, HotelChainID, problems_water, problems_
                  (20002, 2, 1, true, false, false, NULL, 500.00, false, true, true, true, true, true, false, 2, true, false, false, true),
                  (20003, 2, 1, false, true, false, NULL, 245.50, true, false, false, true, true, false, true, 3, false, true, false, true),
                  (20004, 2, 1, true, false, false, NULL, 999.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (20005, 2, 1, false, false, false, 'Odor in bathroom', 150.50, true, true, false, false, true, false, true, 5, true, false, true, false)
+                 (20005, 2, 1, false, false, false, 'Odor in bathroom', 150.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
                  (30001, 3, 1, false, true, false, NULL, 120.50, true, true, true, true, true, true, false, 1, true, false, true, false),
                  (30002, 3, 1, true, false, true, NULL, 450.00, false, true, true, true, true, true, false, 4, true, false, false, true),
                  (30003, 3, 1, false, true, false, 'Musty odor in room', 265.50, true, false, false, true, true, false, true, 2, false, true, false, true),
                  (30004, 3, 1, true, false, true, NULL, 899.99, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (30005, 3, 1, false, false, false, 'too noisy', 170.50, true, true, false, false, true, false, true, 5, true, false, true, false)
+                 (30005, 3, 1, false, false, false, 'too noisy', 170.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
                  (40001, 4, 1, false, true, false, 'Weak Wi-Fi signal', 130.50, true, true, true, true, true, true, false, 1, true, false, true, false),
                  (40002, 4, 1, true, false, false, NULL, 470.00, false, true, true, true, true, true, false, 2, true, false, false, true),
@@ -412,197 +334,197 @@ INSERT INTO Room (room_number,  HotelID, HotelChainID, problems_water, problems_
                  (80004, 8, 1, true, false, false, NULL, 149.99, true, true, true, true, true, true, false, 2, true, false, true, false),
                  (80005, 8, 1, false, false, false, 'Stained carpet', 220.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (10001, 1, 2, false, true, false, 'Faulty air conditioning', 110.50, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (10002, 1, 2, true, false, false, NULL, 500.00, false, true, true, true, true, true, false, 3, true, false, false, true),
-                 (10003, 1, 2, false, true, false, NULL, 245.50, true, false, false, true, true, false, true, 1, false, true, false, true),
-                 (10004, 1, 2, true, false, false, NULL, 999.99, true, true, true, true, true, true, false, 2, true, false, true, false),
-                 (10005, 1, 2, false, false, false, 'Musty odor in room', 150.50, true, true, false, false, true, false, true, 4, true, false, true, false),
+                 (12001, 1, 2, false, true, false, 'Faulty air conditioning', 110.50, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (12002, 1, 2, true, false, false, NULL, 500.00, false, true, true, true, true, true, false, 3, true, false, false, true),
+                 (12003, 1, 2, false, true, false, NULL, 245.50, true, false, false, true, true, false, true, 1, false, true, false, true),
+                 (12004, 1, 2, true, false, false, NULL, 999.99, true, true, true, true, true, true, false, 2, true, false, true, false),
+                 (12005, 1, 2, false, false, false, 'Musty odor in room', 150.50, true, true, false, false, true, false, true, 4, true, false, true, false),
 
-                 (20001, 2, 2, false, true, false, 'Stained carpet', 120.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (20002, 2, 2, true, false, false, NULL, 510.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (20003, 2, 2, false, true, false, NULL, 255.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (20004, 2, 2, true, false, false, NULL, 989.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (20005, 2, 2, false, false, false, 'Faulty lighting', 130.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (23001, 2, 2, false, true, false, 'Stained carpet', 120.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (23002, 2, 2, true, false, false, NULL, 510.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (23003, 2, 2, false, true, false, NULL, 255.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (23004, 2, 2, true, false, false, NULL, 989.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (23005, 2, 2, false, false, false, 'Faulty lighting', 130.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (30001, 3, 2, false, true, false, 'Weak Wi-Fi signal', 130.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (30002, 3, 2, true, false, false, NULL, 520.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (30003, 3, 2, false, true, false, NULL, 265.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (30004, 3, 2, true, false, false, NULL, 999.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (30005, 3, 2, false, false, false, 'Uncomfortable bed', 140.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (34001, 3, 2, false, true, false, 'Weak Wi-Fi signal', 130.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (34002, 3, 2, true, false, false, NULL, 520.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (34003, 3, 2, false, true, false, NULL, 265.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (34004, 3, 2, true, false, false, NULL, 999.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (34005, 3, 2, false, false, false, 'Uncomfortable bed', 140.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (40001, 4, 2, false, true, false, 'Broken TV', 140.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (40002, 4, 2, true, false, false, NULL, 530.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (40003, 4, 2, false, true, false, NULL, 275.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (40004, 4, 2, true, false, false, NULL, 119.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (40005, 4, 2, false, false, false, 'Musty smell in room', 150.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (45001, 4, 2, false, true, false, 'Broken TV', 140.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (45002, 4, 2, true, false, false, NULL, 530.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (45003, 4, 2, false, true, false, NULL, 275.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (45004, 4, 2, true, false, false, NULL, 119.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (45005, 4, 2, false, false, false, 'Musty smell in room', 150.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (50001, 5, 2, false, true, false, 'Noisy air conditioning', 150.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (50002, 5, 2, true, false, false, NULL, 540.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (50003, 5, 2, false, true, false, NULL, 285.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (50004, 5, 2, true, false, false, NULL, 129.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (50005, 5, 2, false, false, false, 'Dirty bathroom', 160.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (56001, 5, 2, false, true, false, 'Noisy air conditioning', 150.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (56002, 5, 2, true, false, false, NULL, 540.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (56003, 5, 2, false, true, false, NULL, 285.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (56004, 5, 2, true, false, false, NULL, 129.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (56005, 5, 2, false, false, false, 'Dirty bathroom', 160.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (60001, 6, 2, false, true, false, 'Clogged sink', 160.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (60002, 6, 2, true, false, false, NULL, 550.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (60003, 6, 2, false, true, false, NULL, 295.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (60004, 6, 2, true, false, false, NULL, 139.99, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (60005, 6, 2, false, false, false, 'Unpleasant odor', 170.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (67001, 6, 2, false, true, false, 'Clogged sink', 160.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (67002, 6, 2, true, false, false, NULL, 550.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (67003, 6, 2, false, true, false, NULL, 295.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (67004, 6, 2, true, false, false, NULL, 139.99, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (67005, 6, 2, false, false, false, 'Unpleasant odor', 170.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (70001, 7, 2, false, true, false, 'Leaky faucet', 180.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (70002, 7, 2, true, false, false, NULL, 570.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (70003, 7, 2, false, true, false, NULL, 305.50, true, false, false, true, true, false, true, 1, false, true, false, true),
-                 (70004, 7, 2, true, false, false, NULL, 179.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (70005, 7, 2, false, false, false, 'Dusty room', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (78001, 7, 2, false, true, false, 'Leaky faucet', 180.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (78002, 7, 2, true, false, false, NULL, 570.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (78003, 7, 2, false, true, false, NULL, 305.50, true, false, false, true, true, false, true, 1, false, true, false, true),
+                 (78004, 7, 2, true, false, false, NULL, 179.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (78005, 7, 2, false, false, false, 'Dusty room', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (80001, 8, 2, false, true, false, 'Broken window latch', 200.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (80002, 8, 2, true, false, false, NULL, 590.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (80003, 8, 2, false, true, false, NULL, 325.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (80004, 8, 2, true, false, false, NULL, 199.99, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (80005, 8, 2, false, false, false, 'Unsatisfactory cleanliness', 210.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (89001, 8, 2, false, true, false, 'Broken window latch', 200.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (89002, 8, 2, true, false, false, NULL, 590.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (89003, 8, 2, false, true, false, NULL, 325.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (89004, 8, 2, true, false, false, NULL, 199.99, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (89005, 8, 2, false, false, false, 'Unsatisfactory cleanliness', 210.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (10001, 1, 3, false, true, false, 'Loud HVAC system', 150.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (10002, 1, 3, true, false, false, NULL, 250.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (10003, 1, 3, false, true, false, NULL, 180.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (10004, 1, 3, true, false, false, NULL, 450.99, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (10005, 1, 3, false, false, false, 'Stained carpet', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (11001, 1, 3, false, true, false, 'Loud HVAC system', 150.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (11002, 1, 3, true, false, false, NULL, 250.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (11003, 1, 3, false, true, false, NULL, 180.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (11004, 1, 3, true, false, false, NULL, 450.99, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (11005, 1, 3, false, false, false, 'Stained carpet', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (20001, 2, 3, false, true, false, 'Noisy neighbors', 130.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (20002, 2, 3, true, false, false, NULL, 220.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (20003, 2, 3, false, true, false, NULL, 150.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (20004, 2, 3, true, false, false, NULL, 480.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (20005, 2, 3, false, false, false, 'Uncomfortable bed', 160.50, true, true, false, false, true, false, true, 4, true, false, true, false),
+                 (22001, 2, 3, false, true, false, 'Noisy neighbors', 130.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (22002, 2, 3, true, false, false, NULL, 220.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (22003, 2, 3, false, true, false, NULL, 150.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (22004, 2, 3, true, false, false, NULL, 480.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (22005, 2, 3, false, false, false, 'Uncomfortable bed', 160.50, true, true, false, false, true, false, true, 4, true, false, true, false),
 
-                 (30001, 3, 3, false, true, false, 'Poor ventilation', 170.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (30002, 3, 3, true, false, false, NULL, 270.00, false, true, true, true, true, true, false, 5, true, false, false, true),
-                 (30003, 3, 3, false, true, false, NULL, 190.50, true, false, false, true, true, false, true, 2, false, true, false, true),
-                 (30004, 3, 3, true, false, false, NULL, 510.99, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (30005, 3, 3, false, false, false, 'Cracked window', 200.50, true, true, false, false, true, false, true, 4, true, false, true, false),
+                 (33001, 3, 3, false, true, false, 'Poor ventilation', 170.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (33002, 3, 3, true, false, false, NULL, 270.00, false, true, true, true, true, true, false, 5, true, false, false, true),
+                 (33003, 3, 3, false, true, false, NULL, 190.50, true, false, false, true, true, false, true, 2, false, true, false, true),
+                 (33004, 3, 3, true, false, false, NULL, 510.99, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (33005, 3, 3, false, false, false, 'Cracked window', 200.50, true, true, false, false, true, false, true, 4, true, false, true, false),
 
-                 (40001, 4, 3, false, true, false, 'Unpleasant odor', 180.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (40002, 4, 3, true, false, false, NULL, 290.00, false, true, true, true, true, true, false, 5, true, false, false, true),
-                 (40003, 4, 3, false, true, false, NULL, 200.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (40004, 4, 3, true, false, false, NULL, 540.99, true, true, true, true, true, true, false, 2, true, false, true, false),
-                 (40005, 4, 3, false, false, false, 'Dirty carpet', 210.50, true, true, false, false, true, false, true, 4, true, false, true, false),
+                 (44001, 4, 3, false, true, false, 'Unpleasant odor', 180.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (44002, 4, 3, true, false, false, NULL, 290.00, false, true, true, true, true, true, false, 5, true, false, false, true),
+                 (44003, 4, 3, false, true, false, NULL, 200.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (44004, 4, 3, true, false, false, NULL, 540.99, true, true, true, true, true, true, false, 2, true, false, true, false),
+                 (44005, 4, 3, false, false, false, 'Dirty carpet', 210.50, true, true, false, false, true, false, true, 4, true, false, true, false),
 
-                 (50001, 5, 3, false, true, false, 'Clogged drain', 190.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (50002, 5, 3, true, false, false, NULL, 300.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (50003, 5, 3, false, true, false, NULL, 210.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (50004, 5, 3, true, false, false, NULL, 560.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (50005, 5, 3, false, false, false, 'Leaky faucet', 220.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (55001, 5, 3, false, true, false, 'Clogged drain', 190.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (55002, 5, 3, true, false, false, NULL, 300.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (55003, 5, 3, false, true, false, NULL, 210.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (55004, 5, 3, true, false, false, NULL, 560.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (55005, 5, 3, false, false, false, 'Leaky faucet', 220.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (60001, 6, 3, false, true, false, 'Faulty thermostat', 160.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (60002, 6, 3, true, false, false, NULL, 270.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (60003, 6, 3, false, true, false, NULL, 180.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (60004, 6, 3, true, false, false, NULL, 490.99, true, true, true, true, true, true, false, 4, true, false, true, false),
-                 (60005, 6, 3, false, false, false, 'Broken window', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
+                 (66001, 6, 3, false, true, false, 'Faulty thermostat', 160.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (66002, 6, 3, true, false, false, NULL, 270.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (66003, 6, 3, false, true, false, NULL, 180.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (66004, 6, 3, true, false, false, NULL, 490.99, true, true, true, true, true, true, false, 4, true, false, true, false),
+                 (66005, 6, 3, false, false, false, 'Broken window', 190.50, true, true, false, false, true, false, true, 5, true, false, true, false),
 
-                 (70001, 7, 3, false, true, false, 'Stained carpet', 180.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (70002, 7, 3, true, false, false, NULL, 290.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (70003, 7, 3, false, true, false, NULL, 200.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (70004, 7, 3, true, false, false, NULL, 540.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (70005, 7, 3, false, false, false, 'Worn-out mattress', 210.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (77001, 7, 3, false, true, false, 'Stained carpet', 180.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (77002, 7, 3, true, false, false, NULL, 290.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (77003, 7, 3, false, true, false, NULL, 200.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (77004, 7, 3, true, false, false, NULL, 540.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (77005, 7, 3, false, false, false, 'Worn-out mattress', 210.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (80001, 8, 3, false, true, false, 'Dirty carpets', 220.50, true, true, true, true, true, true, false, 2, true, false, true, false),
-                 (80002, 8, 3, true, false, false, NULL, 330.00, false, true, true, true, true, true, false, 3, true, false, false, true),
-                 (80003, 8, 3, false, true, false, NULL, 240.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (80004, 8, 3, true, false, false, NULL, 580.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (80005, 8, 3, false, false, false, 'Leaking faucet', 250.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (88001, 8, 3, false, true, false, 'Dirty carpets', 220.50, true, true, true, true, true, true, false, 2, true, false, true, false),
+                 (88002, 8, 3, true, false, false, NULL, 330.00, false, true, true, true, true, true, false, 3, true, false, false, true),
+                 (88003, 8, 3, false, true, false, NULL, 240.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (88004, 8, 3, true, false, false, NULL, 580.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (88005, 8, 3, false, false, false, 'Leaking faucet', 250.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (10001, 1, 4, false, true, false, 'Broken window blind', 190.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (10002, 1, 4, true, false, false, NULL, 300.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (10003, 1, 4, false, true, false, NULL, 210.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (10004, 1, 4, true, false, false, NULL, 550.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (10005, 1, 4, false, false, false, 'Clogged sink', 220.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (11101, 1, 4, false, true, false, 'Broken window blind', 190.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (11102, 1, 4, true, false, false, NULL, 300.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (11103, 1, 4, false, true, false, NULL, 210.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (11104, 1, 4, true, false, false, NULL, 550.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (11105, 1, 4, false, false, false, 'Clogged sink', 220.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (20001, 2, 4, false, true, false, 'Stained walls', 200.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (20002, 2, 4, true, false, false, NULL, 310.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (20003, 2, 4, false, true, false, NULL, 220.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (20004, 2, 4, true, false, false, NULL, 560.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (20005, 2, 4, false, false, false, 'Noisy air conditioning', 230.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (22201, 2, 4, false, true, false, 'Stained walls', 200.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (22202, 2, 4, true, false, false, NULL, 310.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (22203, 2, 4, false, true, false, NULL, 220.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (22204, 2, 4, true, false, false, NULL, 560.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (22205, 2, 4, false, false, false, 'Noisy air conditioning', 230.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (30001, 3, 4, false, true, false, 'Worn-out carpet', 210.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (30002, 3, 4, true, false, false, NULL, 320.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (30003, 3, 4, false, true, false, NULL, 230.50, true, false, false, true, true, false, true, 3, false, true, false, true),
-                 (30004, 3, 4, true, false, false, NULL, 570.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (30005, 3, 4, false, false, false, 'Leaking shower', 240.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (33301, 3, 4, false, true, false, 'Worn-out carpet', 210.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (33302, 3, 4, true, false, false, NULL, 320.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (33303, 3, 4, false, true, false, NULL, 230.50, true, false, false, true, true, false, true, 3, false, true, false, true),
+                 (33304, 3, 4, true, false, false, NULL, 570.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (33305, 3, 4, false, false, false, 'Leaking shower', 240.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (40001, 4, 4, false, true, false, 'Cracked tiles', 220.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (40002, 4, 4, true, false, false, NULL, 330.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (40003, 4, 4, false, true, false, NULL, 240.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (40004, 4, 4, true, false, false, NULL, 580.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (40005, 4, 4, false, false, false, 'Faulty thermostat', 250.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (44401, 4, 4, false, true, false, 'Cracked tiles', 220.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (44402, 4, 4, true, false, false, NULL, 330.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (44403, 4, 4, false, true, false, NULL, 240.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (44404, 4, 4, true, false, false, NULL, 580.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (44405, 4, 4, false, false, false, 'Faulty thermostat', 250.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (50001, 5, 4, false, true, false, 'Dirty curtains', 230.50, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (50002, 5, 4, true, false, false, NULL, 340.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (50003, 5, 4, false, true, false, NULL, 250.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (50004, 5, 4, true, false, false, NULL, 590.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (50005, 5, 4, false, false, false, 'Broken door handle', 260.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (55501, 5, 4, false, true, false, 'Dirty curtains', 230.50, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (55502, 5, 4, true, false, false, NULL, 340.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (55503, 5, 4, false, true, false, NULL, 250.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (55504, 5, 4, true, false, false, NULL, 590.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (55505, 5, 4, false, false, false, 'Broken door handle', 260.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (60001, 6, 4, false, true, false, 'Stained bed sheets', 240.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (60002, 6, 4, true, false, false, NULL, 350.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (60003, 6, 4, false, true, false, NULL, 260.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (60004, 6, 4, true, false, false, NULL, 600.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (60005, 6, 4, false, false, false, 'Musty smell', 270.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (66601, 6, 4, false, true, false, 'Stained bed sheets', 240.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (66602, 6, 4, true, false, false, NULL, 350.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (66603, 6, 4, false, true, false, NULL, 260.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (66604, 6, 4, true, false, false, NULL, 600.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (66605, 6, 4, false, false, false, 'Musty smell', 270.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (70001, 7, 4, false, true, false, 'Noisy neighbors', 280.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (70002, 7, 4, true, false, false, NULL, 360.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (70003, 7, 4, false, true, false, NULL, 270.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (70004, 7, 4, true, false, false, NULL, 620.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (70005, 7, 4, false, false, false, 'Creaky floorboards', 290.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (77701, 7, 4, false, true, false, 'Noisy neighbors', 280.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (77702, 7, 4, true, false, false, NULL, 360.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (77703, 7, 4, false, true, false, NULL, 270.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (77704, 7, 4, true, false, false, NULL, 620.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (77705, 7, 4, false, false, false, 'Creaky floorboards', 290.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (80001, 8, 4, false, true, false, 'Weak WiFi signal', 300.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (80002, 8, 4, true, false, false, NULL, 370.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (80003, 8, 4, false, true, false, NULL, 280.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (80004, 8, 4, true, false, false, NULL, 640.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (80005, 8, 4, false, false, false, 'Stained carpet', 310.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (88801, 8, 4, false, true, false, 'Weak WiFi signal', 300.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (88802, 8, 4, true, false, false, NULL, 370.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (88803, 8, 4, false, true, false, NULL, 280.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (88804, 8, 4, true, false, false, NULL, 640.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (88805, 8, 4, false, false, false, 'Stained carpet', 310.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (10001, 1, 5, false, true, false, 'Uncomfortable mattress', 320.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (10002, 1, 5, true, false, false, NULL, 380.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (10003, 1, 5, false, true, false, NULL, 290.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (10004, 1, 5, true, false, false, NULL, 660.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (10005, 1, 5, false, false, false, 'Broken bedside lamp', 330.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (11111, 1, 5, false, true, false, 'Uncomfortable mattress', 320.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (11112, 1, 5, true, false, false, NULL, 380.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (11113, 1, 5, false, true, false, NULL, 290.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (11114, 1, 5, true, false, false, NULL, 660.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (11115, 1, 5, false, false, false, 'Broken bedside lamp', 330.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (20001, 2, 5, false, true, false, 'Noisy air conditioning', 340.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (20002, 2, 5, true, false, false, NULL, 390.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (20003, 2, 5, false, true, false, NULL, 300.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (20004, 2, 5, true, false, false, NULL, 680.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (20005, 2, 5, false, false, false, 'Leaky faucet', 350.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (22221, 2, 5, false, true, false, 'Noisy air conditioning', 340.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (22222, 2, 5, true, false, false, NULL, 390.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (22223, 2, 5, false, true, false, NULL, 300.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (22224, 2, 5, true, false, false, NULL, 680.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (22225, 2, 5, false, false, false, 'Leaky faucet', 350.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (30001, 3, 5, false, true, false, 'Bad odor', 360.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (30002, 3, 5, true, false, false, NULL, 400.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (30003, 3, 5, false, true, false, NULL, 310.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (30004, 3, 5, true, false, false, NULL, 700.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (30005, 3, 5, false, false, false, 'Dirty carpet', 370.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (33331, 3, 5, false, true, false, 'Bad odor', 360.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (33332, 3, 5, true, false, false, NULL, 400.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (33333, 3, 5, false, true, false, NULL, 310.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (33334, 3, 5, true, false, false, NULL, 700.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (33335, 3, 5, false, false, false, 'Dirty carpet', 370.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (40001, 4, 5, false, true, false, 'Faulty heating system', 380.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (40002, 4, 5, true, false, false, NULL, 420.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (40003, 4, 5, false, true, false, NULL, 320.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (40004, 4, 5, true, false, false, NULL, 720.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (40005, 4, 5, false, false, false, 'Worn-out carpet', 390.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (44441, 4, 5, false, true, false, 'Faulty heating system', 380.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (44442, 4, 5, true, false, false, NULL, 420.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (44443, 4, 5, false, true, false, NULL, 320.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (44444, 4, 5, true, false, false, NULL, 720.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (44445, 4, 5, false, false, false, 'Worn-out carpet', 390.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (50001, 5, 5, false, true, false, 'Malfunctioning heating', 400.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (50002, 5, 5, true, false, false, NULL, 450.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (50003, 5, 5, false, true, false, NULL, 350.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (50004, 5, 5, true, false, false, NULL, 750.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (50005, 5, 5, false, false, false, 'Cracked window', 420.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (55551, 5, 5, false, true, false, 'Malfunctioning heating', 400.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (55552, 5, 5, true, false, false, NULL, 450.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (55553, 5, 5, false, true, false, NULL, 350.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (55554, 5, 5, true, false, false, NULL, 750.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (55555, 5, 5, false, false, false, 'Cracked window', 420.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (60001, 6, 5, false, true, false, 'Uncomfortable pillows', 410.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (60002, 6, 5, true, false, false, NULL, 470.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (60003, 6, 5, false, true, false, NULL, 380.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (60004, 6, 5, true, false, false, NULL, 770.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (60005, 6, 5, false, false, false, 'Stained carpet', 430.50, true, true, false, false, true, false, true, 1, true, false, true, false),
+                 (66661, 6, 5, false, true, false, 'Uncomfortable pillows', 410.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (66662, 6, 5, true, false, false, NULL, 470.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (66663, 6, 5, false, true, false, NULL, 380.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (66664, 6, 5, true, false, false, NULL, 770.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (66665, 6, 5, false, false, false, 'Stained carpet', 430.50, true, true, false, false, true, false, true, 1, true, false, true, false),
 
-                 (70001, 7, 5, false, true, false, 'Weak Wi-Fi signal', 420.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (70002, 7, 5, true, false, false, NULL, 480.00, false, true, true, true, true, true, false, 4, true, false, false, true),
-                 (70003, 7, 5, false, true, false, NULL, 390.50, true, false, false, true, true, false, true, 5, false, true, false, true),
-                 (70004, 7, 5, true, false, false, NULL, 790.99, true, true, true, true, true, true, false, 1, true, false, true, false),
-                 (70005, 7, 5, false, false, false, 'Uncomfortable bed', 440.50, true, true, false, false, true, false, true, 2, true, false, true, false),
+                 (77771, 7, 5, false, true, false, 'Weak Wi-Fi signal', 420.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (77772, 7, 5, true, false, false, NULL, 480.00, false, true, true, true, true, true, false, 4, true, false, false, true),
+                 (77773, 7, 5, false, true, false, NULL, 390.50, true, false, false, true, true, false, true, 5, false, true, false, true),
+                 (77774, 7, 5, true, false, false, NULL, 790.99, true, true, true, true, true, true, false, 1, true, false, true, false),
+                 (77775, 7, 5, false, false, false, 'Uncomfortable bed', 440.50, true, true, false, false, true, false, true, 2, true, false, true, false),
 
-                 (80001, 8, 5, false, true, false, 'Noisy air conditioner', 430.50, true, true, true, true, true, true, false, 3, true, false, true, false),
-                 (80002, 8, 5, true, false, false, NULL, 490.00, false, true, true, true, true, true, false, 2, true, false, false, true),
-                 (80003, 8, 5, false, true, false, NULL, 400.50, true, false, false, true, true, false, true, 4, false, true, false, true),
-                 (80004, 8, 5, true, false, false, NULL, 810.99, true, true, true, true, true, true, false, 5, true, false, true, false),
-                 (80005, 8, 5, false, false, false, 'Dirty walls', 450.50, true, true, false, false, true, false, true, 1, true, false, true, false);
+                 (88881, 8, 5, false, true, false, 'Noisy air conditioner', 430.50, true, true, true, true, true, true, false, 3, true, false, true, false),
+                 (88882, 8, 5, true, false, false, NULL, 490.00, false, true, true, true, true, true, false, 2, true, false, false, true),
+                 (88883, 8, 5, false, true, false, NULL, 400.50, true, false, false, true, true, false, true, 4, false, true, false, true),
+                 (88884, 8, 5, true, false, false, NULL, 810.99, true, true, true, true, true, true, false, 5, true, false, true, false),
+                 (88885, 8, 5, false, false, false, 'Dirty walls', 450.50, true, true, false, false, true, false, true, 1, true, false, true, false);
 
 
 --Table structure:Renting
@@ -652,20 +574,20 @@ VALUES
 
 
 --Queries
---aggregation queries
+
+--aggregation query
+--find average room price
 SELECT AVG(price) AS avg_room_price
 FROM Room;
 
-SELECT hotelID, COUNT(*) AS num_bookings
-FROM Booking
-GROUP BY hotelID;
-
 --regular queries
+--rooms with all the amenities
 SELECT room_number
 FROM Room
 WHERE amenities_tv=true AND amenities_wifi=true AND amenities_air_con=true
 AND amenities_fridge=true AND amenities_toiletries=true;
 
+--rooms with price less than 500
 SELECT room_number
 FROM Room
 WHERE price < 500.00;

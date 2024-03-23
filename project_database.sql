@@ -667,7 +667,7 @@ CREATE INDEX idx_booking_date ON Booking (booking_date);
 Accelerates queries such as finding available rooms for a given date, checking booking history for a particular date, or analyzing booking trends over time. */
 
 --helps to quickly find out booking details for specific customer (will confirm with the TA the check_in_check_out schema and then implement this index)
-CREATE INDEX idx_customer_id ON Check_in_check_out(customer_ID);
+--CREATE INDEX idx_customer_id ON Check_in_check_out(customer_ID);
 
 --Index on hotelID in Room will accelerate queries that require filtering or joining rooms based on the hotel they belong to. Examples include:
 --retrieving all rooms belonging to a specific hotel or joining Room with other tables based on its hotel

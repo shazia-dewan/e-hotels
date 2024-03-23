@@ -640,6 +640,26 @@ Before INSERT ON Hotel
 For EACH ROW
 EXECUTE Function prevent_invalid_hotel();
 
+--Trigger to ensure a hotel cannot be deleted if it has rented rooms
+CREATE OR REPLACE FUNCTION prevent_hotel_deletion_if_renting()
+RETURNS TRIGGER AS $$
+BEGIN
+	IF EXISTS (
+		SELECT 1 FROM Renting
+		WHERE hotelID = OLD.hotelID
+	) THEN
+		RAISE EXCEPTION 'Cannot delete hotel with rented rooms';
+	END IF;
+	RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_delete_hotel_rented_rooms
+BEFORE DELETE ON Hotel
+FOR EACH ROW
+EXECUTE FUNCTION prevent_hotel_deletion_if_renting();
+
+
 --Indexes
 
 CREATE INDEX idx_booking_date ON Booking (booking_date);
@@ -649,7 +669,25 @@ Accelerates queries such as finding available rooms for a given date, checking b
 --helps to quickly find out booking details for specific customer (will confirm with the TA the check_in_check_out schema and then implement this index)
 --CREATE INDEX idx_customer_id ON Check_in_check_out(customer_ID);
 
+--Index on hotelID in Room will accelerate queries that require filtering or joining rooms based on the hotel they belong to. Examples include:
+--retrieving all rooms belonging to a specific hotel or joining Room with other tables based on its hotel
+CREATE INDEX idx_hotelID_room ON Room (HotelID);
+
+
 --Views
+--View 1: Number of available rooms per area
+CREATE VIEW AvailableRoomsPerArea AS
+SELECT CONCAT(SPLIT_PART(h.street, ' ', 2), ', ', h.city) AS area,
+       COUNT(DISTINCT r.Room_number) AS num_available_rooms
+FROM Room r
+JOIN Hotel h ON r.HotelID = h.hotelID AND h.hotelChainID=r.hotelChainID
+WHERE r.Room_number NOT IN (
+    SELECT Room_number FROM Renting
+    UNION
+    SELECT Room_number FROM Booking
+)
+GROUP BY area;
+
 
 --View 2: Aggregated capacity of all the rooms in a specific hotel
 CREATE VIEW RoomCapacity AS

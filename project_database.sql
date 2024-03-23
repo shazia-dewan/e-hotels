@@ -192,7 +192,7 @@ VALUES
     (567890123, 5, 3, 'David', 'Wilson', 'Anderson', '654 Cedar St', 'Ruraltown', 'North America', '56789', true, false, true, false);
 
 
---Table Structure: Customer 
+--Table Structure: Customer
 CREATE TABLE Customer (
     customer_ID NUMERIC(9,0) PRIMARY KEY CHECK (customer_ID > 0),
     street VARCHAR(100) NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE Customer (
 );
 
 
---Sample customers 
+--Sample customers
 INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration)
 VALUES
     (123456789, '123 Maple St', 'Cityville', 'North America', '12345', 'John', 'Doe', 'Smith', '2023-01-01'),
@@ -580,6 +580,8 @@ VALUES
 SELECT AVG(price) AS avg_room_price
 FROM Room;
 
+--nested query
+
 --regular queries
 --rooms with all the amenities
 SELECT room_number
@@ -596,7 +598,7 @@ WHERE price < 500.00;
 
 --Modifications (triggers)
 
--- Trigger to ensure a room cannot be booked if it's already reserved for that specific date 
+-- Trigger to ensure a room cannot be booked if it's already reserved for that specific date
 CREATE OR REPLACE FUNCTION prevent_double_booking()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -617,26 +619,26 @@ BEFORE UPDATE ON Booking
 FOR EACH ROW
 EXECUTE FUNCTION prevent_double_booking();
 
---Trigger to ensure a hotel cannot be deleted if it has rented rooms
-CREATE OR REPLACE FUNCTION prevent_hotel_deletion_if_renting()
+-- Trigger to ensure a hotel cannot be inserted if its ID is null or its hotelChainID does not exists in hotelChain
+CREATE OR REPLACE FUNCTION prevent_invalid_hotel()
 RETURNS TRIGGER AS $$
 BEGIN
-	IF EXISTS (
-		SELECT 1 FROM Renting
-		WHERE hotelID = OLD.hotelID
-	) THEN
-		RAISE EXCEPTION 'Cannot delete hotel with rented rooms';
+    IF new.hotelID IS NULL THEN
+	                RAISE EXCEPTION 'hotelID should not be null';
 	END IF;
-	RETURN OLD;
+
+	IF Not Exists( SELECT 1 FROM hotelChain where hotelChainID = new.hotelChainID)THEN
+	                RAISE EXCEPTION 'Hotel should be a part of already existing hotel chain';
+
+    END IF;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-
-CREATE TRIGGER before_delete_hotel_rented_rooms
-BEFORE DELETE ON Hotel
-FOR EACH ROW
-EXECUTE FUNCTION prevent_hotel_deletion_if_renting();
-
+Create TRIGGER before_insert_hotel
+Before INSERT ON Hotel
+For EACH ROW
+EXECUTE Function prevent_invalid_hotel();
 
 --Indexes
 
@@ -644,33 +646,13 @@ CREATE INDEX idx_booking_date ON Booking (booking_date);
 /*This index would be beneficial for queries that involve filtering or sorting bookings by date. For example, when retrieving bookings for a specific date range or when sorting bookings by date.
 Accelerates queries such as finding available rooms for a given date, checking booking history for a particular date, or analyzing booking trends over time. */
 
---Index on hotelID in Room will accelerate queries that require filtering or joining rooms based on the hotel they belong to. Examples include:
---retrieving all rooms belonging to a specific hotel or joining Room with other tables based on its hotel
-CREATE INDEX idx_hotelID_room ON Room (HotelID);
-
+--helps to quickly find out booking details for specific customer (will confirm with the TA the check_in_check_out schema and then implement this index)
+--CREATE INDEX idx_customer_id ON Check_in_check_out(customer_ID);
 
 --Views
-
---View 1: Number of available rooms per area
-CREATE VIEW AvailableRoomsPerArea AS
-SELECT CONCAT(SPLIT_PART(h.street, ' ', 2), ', ', h.city) AS area,
-       COUNT(DISTINCT r.Room_number) AS num_available_rooms
-FROM Room r
-JOIN Hotel h ON r.HotelID = h.hotelID AND h.hotelChainID=r.hotelChainID
-WHERE r.Room_number NOT IN (
-    SELECT Room_number FROM Renting
-    UNION
-    SELECT Room_number FROM Booking
-)
-GROUP BY area;
-
-
 
 --View 2: Aggregated capacity of all the rooms in a specific hotel
 CREATE VIEW RoomCapacity AS
 SELECT hotelChainID, hotelID, SUM(guest_capacity) AS total_capacity
 FROM Room
 GROUP BY hotelChainID, hotelID;
-
-
-

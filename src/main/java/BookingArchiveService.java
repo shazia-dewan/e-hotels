@@ -119,6 +119,7 @@ public class BookingArchiveService {
      * @throws Exception if an error occurs while accessing the database
      */
     public void updateBookingArchive(BookingArchive bookingArchive) throws Exception {
+
         // SQL query to update a booking archive
         String sql = "UPDATE BookingArchive SET booking_date = ?, Customer_first_name = ?, " +
                 "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +

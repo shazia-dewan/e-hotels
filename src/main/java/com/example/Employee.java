@@ -1,3 +1,5 @@
+package com.example;
+
 public class Employee {
     // Properties
     private long ssnSin; // Social Security Number / Social Insurance Number
@@ -16,7 +18,7 @@ public class Employee {
     private boolean isHotelKeeper; // Indicates if the employee is a hotel keeper
 
     /**
-     * Constructs an Employee object with the specified attributes.
+     * Constructs an com.example.Employee object with the specified attributes.
      *
      * @param ssnSin                 Social Security Number / Social Insurance Number of the employee
      * @param hotelId                ID of the hotel where the employee works

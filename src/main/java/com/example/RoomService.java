@@ -1,3 +1,5 @@
+package com.example;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +18,7 @@ public class RoomService {
     public List<Room> getRooms() throws Exception {
 
         //SQL query to retrieve all rooms
-        String sql= "SELECT * FROM Room";
+        String sql= "SELECT * FROM com.example.Room";
 
         //connection object
         ConnectionDB db = new ConnectionDB();
@@ -92,7 +94,7 @@ public class RoomService {
         ConnectionDB db = new ConnectionDB();
 
         //SQL query to insert room
-        String insertRoomSQL = "INSERT INTO Room (room_number, HotelID, HotelChainID, problems_water, problems_electrical, problems_furniture, problems_other, price, amenities_tv, amenities_wifi, amenities_air_con, amenities_fridge, amenities_toiletries, capacities_single, capacities_double, guest_capacity, sea_view, mountain_view, extendable" +
+        String insertRoomSQL = "INSERT INTO com.example.Room (room_number, HotelID, HotelChainID, problems_water, problems_electrical, problems_furniture, problems_other, price, amenities_tv, amenities_wifi, amenities_air_con, amenities_fridge, amenities_toiletries, capacities_single, capacities_double, guest_capacity, sea_view, mountain_view, extendable" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         //try to connect to the database and catch any exceptions
@@ -146,7 +148,7 @@ public class RoomService {
         ConnectionDB db = new ConnectionDB();
 
         //SQL query to insert room
-        String updateRoomSQL = "UPDATE Room SET HotelID = ? ,HotelChainID = ?, problems_water = ?, problems_electrical = ?, " +
+        String updateRoomSQL = "UPDATE com.example.Room SET HotelID = ? ,HotelChainID = ?, problems_water = ?, problems_electrical = ?, " +
                 "problems_furniture = ?, problems_other = ?, price = ?, amenities_tv = ?, amenities_wifi = ?," +
                 "amenities_air_con = ?, amenities_fridge = ?, amenities_toiletries = ?, capacities_single = ?," +
                 "capacities_double = ?, guest_capacity = ?, sea_view = ?, mountain_view = ?, extendable = ? " +
@@ -202,7 +204,7 @@ public class RoomService {
         String message = "";
 
         //SQL query to insert room
-        String deleteRoomSQL = "DELETE FROM Room WHERE room_number = ?";
+        String deleteRoomSQL = "DELETE FROM com.example.Room WHERE room_number = ?";
 
         //database connection object
         ConnectionDB db = new ConnectionDB();
@@ -226,9 +228,9 @@ public class RoomService {
 
             // Check if any rows were affected (room deleted)
             if (rowsAffected > 0) {
-                message = "Room with room_number " + roomNumber + " was successfully deleted!";
+                message = "com.example.Room with room_number " + roomNumber + " was successfully deleted!";
             } else {
-                message = "Room with room_number " + roomNumber + " was not found!";
+                message = "com.example.Room with room_number " + roomNumber + " was not found!";
             }
         }catch(Exception e) {
             // Throw any errors occurred

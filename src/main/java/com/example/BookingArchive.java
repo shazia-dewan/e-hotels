@@ -1,8 +1,10 @@
+package com.example;
+
 import java.util.Date;
 
-public class RentingArchive {
-    private long rentingId;
-    private Date rentingDate;
+public class BookingArchive {
+    private long bookingId;
+    private Date bookingDate;
     private String customerFirstName;
     private String customerMiddleName;
     private String customerLastName;
@@ -10,11 +12,9 @@ public class RentingArchive {
     private int hotelId;
     private int hotelChainId;
 
-    // Constructors, getters, and setters
-
-    public RentingArchive(long rentingId, Date rentingDate, String customerFirstName, String customerMiddleName, String customerLastName, int roomNumber, int hotelId, int hotelChainId) {
-        this.rentingId = rentingId;
-        this.rentingDate = rentingDate;
+    public BookingArchive(long bookingId, Date bookingDate, String customerFirstName, String customerMiddleName, String customerLastName, int roomNumber, int hotelId, int hotelChainId) {
+        this.bookingId = bookingId;
+        this.bookingDate = bookingDate;
         this.customerFirstName = customerFirstName;
         this.customerMiddleName = customerMiddleName;
         this.customerLastName = customerLastName;
@@ -23,22 +23,20 @@ public class RentingArchive {
         this.hotelChainId = hotelChainId;
     }
 
-    // Getters and setters
-
-    public long getRentingId() {
-        return rentingId;
+    public long getBookingId() {
+        return bookingId;
     }
 
-    public void setRentingId(long rentingId) {
-        this.rentingId = rentingId;
+    public void setBookingId(long bookingId) {
+        this.bookingId = bookingId;
     }
 
-    public Date getRentingDate() {
-        return rentingDate;
+    public Date getBookingDate() {
+        return bookingDate;
     }
 
-    public void setRentingDate(Date rentingDate) {
-        this.rentingDate = rentingDate;
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
     public String getCustomerFirstName() {

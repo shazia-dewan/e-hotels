@@ -1,3 +1,5 @@
+package com.example;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +18,7 @@ public class RentingService {
     public List<Renting> getRentings() throws Exception {
 
         //SQL query to retrieve all rentings
-        String sql= "SELECT * FROM Renting";
+        String sql= "SELECT * FROM com.example.Renting";
 
         //connection object
         ConnectionDB db = new ConnectionDB();
@@ -81,7 +83,7 @@ public class RentingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to insert a new renting
-        String insertRentingSQL = "INSERT INTO Renting (renting_ID, renting_date, Customer_first_name, " +
+        String insertRentingSQL = "INSERT INTO com.example.Renting (renting_ID, renting_date, Customer_first_name, " +
                 "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -126,7 +128,7 @@ public class RentingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to update a renting
-        String updateRentingSQL = "UPDATE Renting SET renting_date = ?, Customer_first_name = ?, " +
+        String updateRentingSQL = "UPDATE com.example.Renting SET renting_date = ?, Customer_first_name = ?, " +
                 "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
                 "hotelID = ?, hotelChainID = ?, Payment = ? WHERE renting_ID = ?";
 
@@ -166,7 +168,7 @@ public class RentingService {
 
     public void deleteRenting(long rentingId) throws Exception {
         //SQL query to delete a renting by ID
-        String deleteRentingSQL = "DELETE FROM Renting WHERE renting_ID = ?";
+        String deleteRentingSQL = "DELETE FROM com.example.Renting WHERE renting_ID = ?";
 
         //database connection
         ConnectionDB db = new ConnectionDB();

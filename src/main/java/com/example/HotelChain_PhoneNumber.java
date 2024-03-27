@@ -1,3 +1,5 @@
+package com.example;
+
 public class HotelChain_PhoneNumber {
 
     private long hotelChainID;

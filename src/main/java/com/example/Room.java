@@ -1,5 +1,7 @@
+package com.example;
+
 public class Room {
-    //attributes of Room
+    //attributes of com.example.Room
     private int roomNumber; //the room number
     private int hotelID;  //the id of the hotel the room belongs to
     private int hotelChainID; //the id of the hotel chain the room belongs to
@@ -21,7 +23,7 @@ public class Room {
     private boolean isExtendable; //indicates if the room can be extended (add a bed)
 
     /**
-     * Constructs a Room object with the specified attributes
+     * Constructs a com.example.Room object with the specified attributes
      * @param roomNumber                    The room number
      * @param hotelID                       The id of the hotel the room belongs to
      * @param hotelChainID                  The id of the hotel chain the room belongs to

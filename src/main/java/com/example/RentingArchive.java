@@ -1,44 +1,32 @@
+package com.example;
+
 import java.util.Date;
 
-public class Renting {
+public class RentingArchive {
     private long rentingId;
     private Date rentingDate;
     private String customerFirstName;
     private String customerMiddleName;
     private String customerLastName;
     private int roomNumber;
-    private int hotelId; //The id of the hotel the room belongs to
-    private int hotelChainId; //The id of the hotel chain the room belongs to
-    private String payment; //The method of payment
+    private int hotelId;
+    private int hotelChainId;
 
-    /**
-     * Constructs a Renting object with the specified attributes
-     *
-     * @param rentingId             The renting id
-     * @param rentingDate           The date of the renting
-     * @param customerFirstName     The customer's first name
-     * @param customerMiddleName    The customer's middle name
-     * @param customerLastName      The customer's last name
-     * @param roomNumber            The number of the room being rented
-     * @param hotelId               The id of the hotel the rented room belongs to
-     * @param hotelChainId          The id of the hotel chain the rented room belongs to
-     * @param payment               The method of payment for the room
-     */
+    // Constructors, getters, and setters
 
-    public Renting (long rentingId, Date rentingDate, String customerFirstName, String customerMiddleName,
-                    String customerLastName, int roomNumber, int hotelId, int hotelChainId, String payment){
+    public RentingArchive(long rentingId, Date rentingDate, String customerFirstName, String customerMiddleName, String customerLastName, int roomNumber, int hotelId, int hotelChainId) {
         this.rentingId = rentingId;
         this.rentingDate = rentingDate;
         this.customerFirstName = customerFirstName;
         this.customerMiddleName = customerMiddleName;
-        this. customerLastName = customerLastName;
+        this.customerLastName = customerLastName;
         this.roomNumber = roomNumber;
         this.hotelId = hotelId;
         this.hotelChainId = hotelChainId;
-        this.payment = payment;
     }
 
-    //getters and setters
+    // Getters and setters
+
     public long getRentingId() {
         return rentingId;
     }
@@ -102,12 +90,5 @@ public class Renting {
     public void setHotelChainId(int hotelChainId) {
         this.hotelChainId = hotelChainId;
     }
-
-    public String getPayment() {
-        return payment;
-    }
-
-    public void setPayment(String payment) {
-        this.payment = payment;
-    }
 }
+

@@ -1,3 +1,7 @@
+package com.example;
+
+import com.example.Booking;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +20,7 @@ public class BookingService {
     public List<Booking> getBookings() throws Exception {
 
         //SQL query to retrieve all bookings
-        String sql= "SELECT * FROM Booking";
+        String sql= "SELECT * FROM com.example.Booking";
 
         //connection object
         ConnectionDB db = new ConnectionDB();
@@ -81,7 +85,7 @@ public class BookingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to insert a new booking
-        String insertBookingSQL = "INSERT INTO Booking (booking_ID, booking_date, Customer_first_name, " +
+        String insertBookingSQL = "INSERT INTO com.example.Booking (booking_ID, booking_date, Customer_first_name, " +
                 "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -126,7 +130,7 @@ public class BookingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to update a booking
-        String updateBookingSQL = "UPDATE Booking SET booking_date = ?, Customer_first_name = ?, " +
+        String updateBookingSQL = "UPDATE com.example.Booking SET booking_date = ?, Customer_first_name = ?, " +
                 "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
                 "hotelID = ?, hotelChainID = ?, Payment = ? WHERE booking_ID = ?";
 
@@ -166,7 +170,7 @@ public class BookingService {
 
     public void deleteBooking(long bookingId) throws Exception {
         // SQL query to delete a booking by ID
-        String deleteBookingSQL = "DELETE FROM Booking WHERE booking_ID = ?";
+        String deleteBookingSQL = "DELETE FROM com.example.Booking WHERE booking_ID = ?";
 
         //database connection
         ConnectionDB db = new ConnectionDB();

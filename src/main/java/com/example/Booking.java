@@ -1,3 +1,5 @@
+package com.example;
+
 import java.util.Date;
 
 public class Booking {
@@ -12,7 +14,7 @@ public class Booking {
     private String payment;
 
     /**
-     * Constructs a Booking object with the specified attributes
+     * Constructs a com.example.Booking object with the specified attributes
      *
      * @param bookingId             The booking id
      * @param bookingDate           The date of the booking

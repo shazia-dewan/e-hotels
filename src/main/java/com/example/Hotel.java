@@ -1,3 +1,5 @@
+package com.example;
+
 public class Hotel {
     private long hotel_ID;
     private long hotelChainID;

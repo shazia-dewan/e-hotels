@@ -1,3 +1,5 @@
+package com.example;
+
 public class Customer {
     private long customerId;
     private String street;
@@ -10,7 +12,7 @@ public class Customer {
     private String dateOfRegistration;
 
     /**
-     * Constructs a new Customer object with the specified attributes.
+     * Constructs a new com.example.Customer object with the specified attributes.
      *
      * @param customerId         The unique identifier for the customer.
      * @param street             The street address of the customer.

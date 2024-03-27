@@ -1,3 +1,5 @@
+package com.example;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,7 +8,7 @@ import java.util.List;
 
 public class HotelChainService {
     public List<HotelChain> getHotelChain() throws Exception {
-        String sql = "SELECT * FROM HotelChain";
+        String sql = "SELECT * FROM com.example.HotelChain";
         ConnectionDB db = new ConnectionDB();
         List<HotelChain> hotelChains = new ArrayList<>();
 
@@ -43,7 +45,7 @@ public class HotelChainService {
     }
 
     public boolean insertHotelChain(HotelChain hotelChain) throws Exception {
-        String sql = "INSERT INTO HotelChain (hotelChainID,email,street,city,province,postal_code,num_hotels,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO com.example.HotelChain (hotelChainID,email,street,city,province,postal_code,num_hotels,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -67,7 +69,7 @@ public class HotelChainService {
     }
 
     public boolean updateHotelChain(HotelChain hotelChain) throws Exception {
-        String sql = "UPDATE HotelChain hotelChainID=?,email=?,street=?,city=?,province=?,postal_code=?,num_hotels=?,phoneNumber=?";
+        String sql = "UPDATE com.example.HotelChain hotelChainID=?,email=?,street=?,city=?,province=?,postal_code=?,num_hotels=?,phoneNumber=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -91,7 +93,7 @@ public class HotelChainService {
     }
 
     public boolean deleteHotelChain(long hotelId) throws Exception {
-        String sql = "DELETE FROM HotelChain WHERE hotelChain_ID=?";
+        String sql = "DELETE FROM com.example.HotelChain WHERE hotelChain_ID=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {

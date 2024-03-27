@@ -1,3 +1,5 @@
+package com.example;
+
 public class HotelChain {
     private long hotelChainID;
     private String email;

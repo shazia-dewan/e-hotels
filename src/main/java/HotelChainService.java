@@ -23,7 +23,8 @@ public class HotelChainService {
                         rs.getString("city"),
                         rs.getString("province"),
                         rs.getString("postal_code"),
-                        rs.getInt("num_hotels")
+                        rs.getInt("num_hotels"),
+                        rs.getInt("phoneNumber")
 
                 );
                 hotelChains.add(hotelChain);
@@ -42,7 +43,7 @@ public class HotelChainService {
     }
 
     public boolean insertHotelChain(HotelChain hotelChain) throws Exception {
-        String sql = "INSERT INTO HotelChain (hotelChainID,email,street,city,province,postal_code,num_hotels) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO HotelChain (hotelChainID,email,street,city,province,postal_code,num_hotels,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -54,6 +55,7 @@ public class HotelChainService {
             stmt.setString(5, hotelChain.getProvince());
             stmt.setString(6, hotelChain.getPostal_code());
             stmt.setInt(7, hotelChain.getNum_hotels());
+            stmt.setInt(8, hotelChain.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();
@@ -65,7 +67,7 @@ public class HotelChainService {
     }
 
     public boolean updateHotelChain(HotelChain hotelChain) throws Exception {
-        String sql = "UPDATE HotelChain hotelChainID=?,email=?,street=?,city=?,province=?,postal_code=?,num_hotels=?";
+        String sql = "UPDATE HotelChain hotelChainID=?,email=?,street=?,city=?,province=?,postal_code=?,num_hotels=?,phoneNumber=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -77,6 +79,7 @@ public class HotelChainService {
             stmt.setString(5, hotelChain.getProvince());
             stmt.setString(6, hotelChain.getPostal_code());
             stmt.setInt(7, hotelChain.getNum_hotels());
+            stmt.setInt(8,hotelChain.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();

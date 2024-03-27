@@ -25,7 +25,8 @@ public class HotelService {
                         rs.getString("street"),
                         rs.getString("city"),
                         rs.getString("province"),
-                        rs.getString("postal_code")
+                        rs.getString("postal_code"),
+                        rs.getInt("phoneNumber")
                 );
                 hotels.add(hotel);
             }
@@ -42,7 +43,7 @@ public class HotelService {
     }
 
     public boolean insertHotel(Hotel hotel) throws Exception {
-        String sql = "INSERT INTO Hotel (hotel_ID, hotelChainID,num_rooms,email,star_rating,street,city,province,postal_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Hotel (hotel_ID, hotelChainID,num_rooms,email,star_rating,street,city,province,postal_code,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -56,6 +57,7 @@ public class HotelService {
             stmt.setString(7, hotel.getCity());
             stmt.setString(8, hotel.getProvince());
             stmt.setString(9, hotel.getPostal_code());
+            stmt.setInt(10,hotel.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();
@@ -66,7 +68,7 @@ public class HotelService {
         }
     }
     public boolean updateHotel(Hotel hotel) throws Exception {
-        String sql = "UPDATE Hotel SET hotel_ID=?, hotelChainID=? ,num_rooms=?,email=?,star_rating=?,street=?,city=?,province=?,postal_code=?";
+        String sql = "UPDATE Hotel SET hotel_ID=?, hotelChainID=? ,num_rooms=?,email=?,star_rating=?,street=?,city=?,province=?,postal_code=?,phoneNumber=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -80,6 +82,7 @@ public class HotelService {
             stmt.setString(7, hotel.getCity());
             stmt.setString(8, hotel.getProvince());
             stmt.setString(9, hotel.getPostal_code());
+            stmt.setInt(10,hotel.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();

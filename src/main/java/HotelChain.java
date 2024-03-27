@@ -7,7 +7,9 @@ public class HotelChain {
     private String postal_code;
     private Integer num_hotels;
 
-    public HotelChain(long hotelChainID, String email, String street, String city, String province,String postal_code,Integer num_hotels){
+    private Integer phoneNumber;
+
+    public HotelChain(long hotelChainID, String email, String street, String city, String province,String postal_code,Integer num_hotels, Integer phoneNumber){
         this.hotelChainID = hotelChainID;
         this.email = email;
         this.street = street;
@@ -15,6 +17,7 @@ public class HotelChain {
         this.province = province;
         this.postal_code = postal_code;
         this.num_hotels = num_hotels;
+        this.phoneNumber = phoneNumber;
     }
 
     private void setHotelChainID(long hotelChainID){
@@ -45,6 +48,8 @@ public class HotelChain {
         this.postal_code = postal_code;
     }
 
+    private void setPhoneNumber(Integer phoneNumber){ this.phoneNumber = phoneNumber; }
+
     public long getHotelChainID(){
         return hotelChainID;
     }
@@ -72,4 +77,7 @@ public class HotelChain {
     public String getPostal_code(){
         return postal_code;
     }
+
+    public Integer getPhoneNumber(){ return phoneNumber; }
+
 }

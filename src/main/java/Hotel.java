@@ -9,7 +9,9 @@ public class Hotel {
     private String province;
     private String postal_code;
 
-    public Hotel(long hotel_ID,long hotelChainID,Integer num_rooms,String email,double star_rating,String street,String city, String province, String postal_code){
+    private Integer phoneNumber;
+
+    public Hotel(long hotel_ID,long hotelChainID,Integer num_rooms,String email,double star_rating,String street,String city, String province, String postal_code,Integer phoneNumber){
         this.hotel_ID = hotel_ID;
         this.hotelChainID = hotelChainID;
         this.num_rooms = num_rooms;
@@ -19,6 +21,7 @@ public class Hotel {
         this.city = city;
         this.province = province;
         this.postal_code = postal_code;
+        this.phoneNumber = phoneNumber;
 
     }
 
@@ -56,6 +59,8 @@ public class Hotel {
         this.postal_code = postal_code;
     }
 
+    private void setPhoneNumber(Integer phoneNumber){ this.phoneNumber = phoneNumber;}
+
     public long getHotel_ID(){
         return hotel_ID;
     }
@@ -88,6 +93,10 @@ public class Hotel {
 
     public String getPostal_code(){
         return postal_code;
+    }
+
+    public Integer getPhoneNumber(){
+        return phoneNumber;
     }
 
 }

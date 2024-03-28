@@ -47,7 +47,7 @@ public class RentingService {
                         rs.getInt("Room_number"),
                         rs.getInt("hotelID"),
                         rs.getInt("hotelChainID"),
-                        rs.getString("Payment")
+                        rs.getInt("Payment")
                 );
 
                 //append renting to rentings list
@@ -102,7 +102,7 @@ public class RentingService {
             stmt.setInt(6, renting.getRoomNumber());
             stmt.setInt(7, renting.getHotelId());
             stmt.setInt(8, renting.getHotelChainId());
-            stmt.setString(9,renting.getPayment());
+            stmt.setInt(9,renting.getPayment());
 
             //execute the query
             stmt.executeUpdate();
@@ -145,7 +145,7 @@ public class RentingService {
             stmt.setInt(5, renting.getRoomNumber());
             stmt.setInt(6, renting.getHotelId());
             stmt.setInt(7, renting.getHotelChainId());
-            stmt.setString(8, renting.getPayment());
+            stmt.setInt(8, renting.getPayment());
             stmt.setLong(9, renting.getRentingId());
 
             // Execute the query

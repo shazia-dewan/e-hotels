@@ -468,17 +468,17 @@ CREATE TABLE Renting (
     Room_number NUMERIC(5,0) CHECK (Room_number > 0),
     hotelID INT CHECK (hotelID > 0),
     hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
-	Payment VARCHAR(50) NOT NULL
+	Payment NUMERIC(16,0) NOT NULL
 );
 
 --sample renting
 INSERT INTO Renting (renting_ID, renting_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment)
 VALUES
-	(123456789, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1, 'Credit Card'),
-    (234567890, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2, 'Cash'),
-    (345678901, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3, 'Paypal'),
-	(987654321, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1, 'Credit Card'),
-	(543219876, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2, 'Debit Card');
+	(123456789, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1, 4928374920185691),
+    (234567890, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2, 8712903456781234),
+    (345678901, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3, 6051298374621097),
+	(987654321, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1, 2189347650238916),
+	(543219876, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2, 7345128936479056);
 
 
 --Table structure: Booking
@@ -490,18 +490,17 @@ CREATE TABLE Booking(
     Customer_last_name VARCHAR(50) NOT NULL,
     Room_number NUMERIC(5,0) CHECK (Room_number > 0),
     hotelID INT CHECK (hotelID > 0),
-    hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
-	Payment VARCHAR(50) NOT NULL
+    hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5)
 );
 
 --sample bookings
-INSERT INTO Booking (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment)
+INSERT INTO Booking (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
 VALUES
-	(567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1, 'Credit Card'),
-    (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2, 'Cash'),
-    (345678912, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3, 'Paypal'),
-	(234567891, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1, 'Credit Card'),
-	(678912345, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2, 'Debit Card');
+	(567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1),
+    (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2),
+    (345678912, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3),
+	(234567891, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1),
+	(678912345, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2);
 
 
 --Queries

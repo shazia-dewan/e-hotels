@@ -48,8 +48,7 @@ public class BookingService {
                         rs.getString("Customer_last_name"),
                         rs.getInt("Room_number"),
                         rs.getInt("hotelID"),
-                        rs.getInt("hotelChainID"),
-                        rs.getString("Payment")
+                        rs.getInt("hotelChainID")
                 );
 
                 //append booking to bookings list
@@ -86,8 +85,8 @@ public class BookingService {
 
         // SQL query to insert a new booking
         String insertBookingSQL = "INSERT INTO com.example.Booking (booking_ID, booking_date, Customer_first_name, " +
-                "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         //try to connect to the database and catch any exceptions
         try(Connection con = db.getConnection()){
@@ -104,7 +103,6 @@ public class BookingService {
             stmt.setInt(6, booking.getRoomNumber());
             stmt.setInt(7, booking.getHotelId());
             stmt.setInt(8, booking.getHotelChainId());
-            stmt.setString(9,booking.getPayment());
 
             //execute the query
             stmt.executeUpdate();
@@ -132,7 +130,7 @@ public class BookingService {
         // SQL query to update a booking
         String updateBookingSQL = "UPDATE com.example.Booking SET booking_date = ?, Customer_first_name = ?, " +
                 "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
-                "hotelID = ?, hotelChainID = ?, Payment = ? WHERE booking_ID = ?";
+                "hotelID = ?, hotelChainID = ? WHERE booking_ID = ?";
 
         //try to connect to database, catch any exceptions
         try(Connection con = db.getConnection()){
@@ -147,8 +145,7 @@ public class BookingService {
             stmt.setInt(5, booking.getRoomNumber());
             stmt.setInt(6, booking.getHotelId());
             stmt.setInt(7, booking.getHotelChainId());
-            stmt.setString(8, booking.getPayment());
-            stmt.setLong(9, booking.getBookingId());
+            stmt.setLong(8, booking.getBookingId());
 
             // Execute the query
             stmt.executeUpdate();

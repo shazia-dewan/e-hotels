@@ -11,7 +11,7 @@ public class Renting {
     private int roomNumber;
     private int hotelId; //The id of the hotel the room belongs to
     private int hotelChainId; //The id of the hotel chain the room belongs to
-    private String payment; //The method of payment
+    private int payment; //The card number that will be charged for the room
 
     /**
      * Constructs a com.example.Renting object with the specified attributes
@@ -24,11 +24,11 @@ public class Renting {
      * @param roomNumber            The number of the room being rented
      * @param hotelId               The id of the hotel the rented room belongs to
      * @param hotelChainId          The id of the hotel chain the rented room belongs to
-     * @param payment               The method of payment for the room
+     * @param payment               The card number that will be charged for the room
      */
 
     public Renting (long rentingId, Date rentingDate, String customerFirstName, String customerMiddleName,
-                    String customerLastName, int roomNumber, int hotelId, int hotelChainId, String payment){
+                    String customerLastName, int roomNumber, int hotelId, int hotelChainId, int payment){
         this.rentingId = rentingId;
         this.rentingDate = rentingDate;
         this.customerFirstName = customerFirstName;
@@ -105,11 +105,11 @@ public class Renting {
         this.hotelChainId = hotelChainId;
     }
 
-    public String getPayment() {
+    public int getPayment() {
         return payment;
     }
 
-    public void setPayment(String payment) {
+    public void setPayment(int payment) {
         this.payment = payment;
     }
 }

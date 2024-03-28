@@ -11,7 +11,6 @@ public class Booking {
     private int roomNumber;
     private int hotelId;
     private int hotelChainId;
-    private String payment;
 
     /**
      * Constructs a com.example.Booking object with the specified attributes
@@ -24,11 +23,10 @@ public class Booking {
      * @param roomNumber            The number of the room being booked
      * @param hotelId               The id of the hotel the booked room belongs to
      * @param hotelChainId          The id of the hotel chain the booked room belongs to
-     * @param payment               The method of payment for the room
      */
 
     public Booking(long bookingId, Date bookingDate, String customerFirstName, String customerMiddleName,
-                   String customerLastName, int roomNumber, int hotelId, int hotelChainId, String payment){
+                   String customerLastName, int roomNumber, int hotelId, int hotelChainId){
         this.bookingId = bookingId;
         this.bookingDate = bookingDate;
         this.customerFirstName = customerFirstName;
@@ -37,7 +35,6 @@ public class Booking {
         this.roomNumber = roomNumber;
         this.hotelId = hotelId;
         this.hotelChainId = hotelChainId;
-        this.payment = payment;
     }
 
     //getters and setters
@@ -106,11 +103,4 @@ public class Booking {
         this.hotelChainId = hotelChainId;
     }
 
-    public String getPayment() {
-        return payment;
-    }
-
-    public void setPayment(String payment) {
-        this.payment = payment;
-    }
 }

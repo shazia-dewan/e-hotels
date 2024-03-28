@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingService {
+public class BookingService{
 
     /**
      * Method to get all bookings from the database
@@ -20,7 +20,7 @@ public class BookingService {
     public List<Booking> getBookings() throws Exception {
 
         //SQL query to retrieve all bookings
-        String sql= "SELECT * FROM com.example.Booking";
+        String sql= "SELECT * FROM Booking";
 
         //connection object
         ConnectionDB db = new ConnectionDB();
@@ -43,9 +43,7 @@ public class BookingService {
                 Booking booking = new Booking(
                         rs.getLong("booking_ID"),
                         rs.getDate("booking_date"),
-                        rs.getString("Customer_first_name"),
-                        rs.getString("Customer_middle_name"),
-                        rs.getString("Customer_last_name"),
+                        rs.getLong("customer_ID"),
                         rs.getInt("Room_number"),
                         rs.getInt("hotelID"),
                         rs.getInt("hotelChainID")
@@ -84,9 +82,9 @@ public class BookingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to insert a new booking
-        String insertBookingSQL = "INSERT INTO com.example.Booking (booking_ID, booking_date, Customer_first_name, " +
-                "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertBookingSQL = "INSERT INTO Booking (booking_ID, booking_date, customer_ID, " +
+                "Room_number, hotelID, hotelChainID) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         //try to connect to the database and catch any exceptions
         try(Connection con = db.getConnection()){
@@ -97,12 +95,10 @@ public class BookingService {
             //set values for the prepared statement
             stmt.setLong(1, booking.getBookingId());
             stmt.setDate(2, new java.sql.Date(booking.getBookingDate().getTime()));
-            stmt.setString(3, booking.getCustomerFirstName());
-            stmt.setString(4, booking.getCustomerMiddleName());
-            stmt.setString(5, booking.getCustomerLastName());
-            stmt.setInt(6, booking.getRoomNumber());
-            stmt.setInt(7, booking.getHotelId());
-            stmt.setInt(8, booking.getHotelChainId());
+            stmt.setLong(3, booking.getCustomerID());
+            stmt.setInt(4, booking.getRoomNumber());
+            stmt.setInt(5, booking.getHotelId());
+            stmt.setInt(6, booking.getHotelChainId());
 
             //execute the query
             stmt.executeUpdate();
@@ -128,9 +124,9 @@ public class BookingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to update a booking
-        String updateBookingSQL = "UPDATE com.example.Booking SET booking_date = ?, Customer_first_name = ?, " +
-                "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
-                "hotelID = ?, hotelChainID = ? WHERE booking_ID = ?";
+        String updateBookingSQL = "UPDATE Booking SET booking_date = ?, customer_ID = ?, " +
+                "Room_number = ?, " +
+                "hotelID = ?, hotelChainID = ?, WHERE booking_ID = ?";
 
         //try to connect to database, catch any exceptions
         try(Connection con = db.getConnection()){
@@ -139,13 +135,11 @@ public class BookingService {
 
             //set parameters for statement
             stmt.setDate(1, new java.sql.Date(booking.getBookingDate().getTime()));
-            stmt.setString(2, booking.getCustomerFirstName());
-            stmt.setString(3, booking.getCustomerMiddleName());
-            stmt.setString(4, booking.getCustomerLastName());
-            stmt.setInt(5, booking.getRoomNumber());
-            stmt.setInt(6, booking.getHotelId());
-            stmt.setInt(7, booking.getHotelChainId());
-            stmt.setLong(8, booking.getBookingId());
+            stmt.setLong(2, booking.getCustomerID());
+            stmt.setInt(3, booking.getRoomNumber());
+            stmt.setInt(4, booking.getHotelId());
+            stmt.setInt(5, booking.getHotelChainId());
+            stmt.setLong(6, booking.getBookingId());
 
             // Execute the query
             stmt.executeUpdate();
@@ -167,7 +161,7 @@ public class BookingService {
 
     public void deleteBooking(long bookingId) throws Exception {
         // SQL query to delete a booking by ID
-        String deleteBookingSQL = "DELETE FROM com.example.Booking WHERE booking_ID = ?";
+        String deleteBookingSQL = "DELETE FROM Booking WHERE booking_ID = ?";
 
         //database connection
         ConnectionDB db = new ConnectionDB();
@@ -176,13 +170,13 @@ public class BookingService {
         try (Connection con = db.getConnection()){
             PreparedStatement stmt = con.prepareStatement(deleteBookingSQL);
 
-                // Set the value for the prepared statement
-                stmt.setLong(1, bookingId);
+            // Set the value for the prepared statement
+            stmt.setLong(1, bookingId);
 
-                // Execute the query
-                stmt.executeUpdate();
-                // Close the statement
-                stmt.close();
+            // Execute the query
+            stmt.executeUpdate();
+            // Close the statement
+            stmt.close();
         }catch (Exception e) {
             // Throw any errors occurred
             throw new Exception("Error while deleting booking: " + e.getMessage());

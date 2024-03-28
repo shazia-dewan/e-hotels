@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RentingService {
 
     /**
@@ -18,7 +19,7 @@ public class RentingService {
     public List<Renting> getRentings() throws Exception {
 
         //SQL query to retrieve all rentings
-        String sql= "SELECT * FROM com.example.Renting";
+        String sql= "SELECT * FROM Renting";
 
         //connection object
         ConnectionDB db = new ConnectionDB();
@@ -41,9 +42,7 @@ public class RentingService {
                 Renting renting = new Renting(
                         rs.getLong("renting_ID"),
                         rs.getDate("renting_date"),
-                        rs.getString("Customer_first_name"),
-                        rs.getString("Customer_middle_name"),
-                        rs.getString("Customer_last_name"),
+                        rs.getLong("customer_ID"),
                         rs.getInt("Room_number"),
                         rs.getInt("hotelID"),
                         rs.getInt("hotelChainID"),
@@ -83,9 +82,9 @@ public class RentingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to insert a new renting
-        String insertRentingSQL = "INSERT INTO com.example.Renting (renting_ID, renting_date, Customer_first_name, " +
-                "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertRentingSQL = "INSERT INTO Renting (renting_ID, renting_date, customer_ID, " +
+                "Room_number, hotelID, hotelChainID, Payment) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         //try to connect to the database and catch any exceptions
         try(Connection con = db.getConnection()){
@@ -96,13 +95,11 @@ public class RentingService {
             //set values for the prepared statement
             stmt.setLong(1, renting.getRentingId());
             stmt.setDate(2, new java.sql.Date(renting.getRentingDate().getTime()));
-            stmt.setString(3, renting.getCustomerFirstName());
-            stmt.setString(4, renting.getCustomerMiddleName());
-            stmt.setString(5, renting.getCustomerLastName());
-            stmt.setInt(6, renting.getRoomNumber());
-            stmt.setInt(7, renting.getHotelId());
-            stmt.setInt(8, renting.getHotelChainId());
-            stmt.setInt(9,renting.getPayment());
+            stmt.setLong(3, renting.getCustomerID());
+            stmt.setInt(4, renting.getRoomNumber());
+            stmt.setInt(5, renting.getHotelId());
+            stmt.setInt(6, renting.getHotelChainId());
+            stmt.setInt(7,renting.getPayment());
 
             //execute the query
             stmt.executeUpdate();
@@ -128,8 +125,8 @@ public class RentingService {
         ConnectionDB db = new ConnectionDB();
 
         // SQL query to update a renting
-        String updateRentingSQL = "UPDATE com.example.Renting SET renting_date = ?, Customer_first_name = ?, " +
-                "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
+        String updateRentingSQL = "UPDATE Renting SET renting_date = ?, customer_ID = ?, " +
+                "Room_number = ?, " +
                 "hotelID = ?, hotelChainID = ?, Payment = ? WHERE renting_ID = ?";
 
         //try to connect to database, catch any exceptions
@@ -139,14 +136,12 @@ public class RentingService {
 
             //set parameters for statement
             stmt.setDate(1, new java.sql.Date(renting.getRentingDate().getTime()));
-            stmt.setString(2, renting.getCustomerFirstName());
-            stmt.setString(3, renting.getCustomerMiddleName());
-            stmt.setString(4, renting.getCustomerLastName());
-            stmt.setInt(5, renting.getRoomNumber());
-            stmt.setInt(6, renting.getHotelId());
-            stmt.setInt(7, renting.getHotelChainId());
-            stmt.setInt(8, renting.getPayment());
-            stmt.setLong(9, renting.getRentingId());
+            stmt.setLong(2, renting.getCustomerID());
+            stmt.setInt(3, renting.getRoomNumber());
+            stmt.setInt(4, renting.getHotelId());
+            stmt.setInt(5, renting.getHotelChainId());
+            stmt.setInt(6, renting.getPayment());
+            stmt.setLong(7, renting.getRentingId());
 
             // Execute the query
             stmt.executeUpdate();
@@ -168,7 +163,7 @@ public class RentingService {
 
     public void deleteRenting(long rentingId) throws Exception {
         //SQL query to delete a renting by ID
-        String deleteRentingSQL = "DELETE FROM com.example.Renting WHERE renting_ID = ?";
+        String deleteRentingSQL = "DELETE FROM Renting WHERE renting_ID = ?";
 
         //database connection
         ConnectionDB db = new ConnectionDB();

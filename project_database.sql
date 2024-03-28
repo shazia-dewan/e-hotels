@@ -457,50 +457,49 @@ INSERT INTO Room (room_number,  HotelID, HotelChainID, problems_water, problems_
                  (88884, 8, 5, true, false, false, NULL, 810.99, true, true, true, true, true, true, false, 5, true, false, true),
                  (88885, 8, 5, false, false, false, 'Dirty walls', 450.50, true, true, false, false, true, false, true, 1, true, false, true);
 
-
 --Table structure:Renting
 CREATE TABLE Renting (
-	renting_ID NUMERIC(9,0) PRIMARY KEY CHECK (Renting_ID > 0),
-    renting_date DATE NOT NULL,
-    Customer_first_name VARCHAR(50) NOT NULL,
-    Customer_middle_name VARCHAR(50),
-    Customer_last_name VARCHAR(50) NOT NULL,
+	Renting_ID NUMERIC(9,0) PRIMARY KEY CHECK (Renting_ID > 0),
+    Date DATE NOT NULL,
+	customer_ID NUMERIC(9,0) not null,
     Room_number NUMERIC(5,0) CHECK (Room_number > 0),
     hotelID INT CHECK (hotelID > 0),
     hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
-	Payment NUMERIC(16,0) NOT NULL
+	Payment VARCHAR(50) NOT NULL,
+	FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
 );
 
 --sample renting
-INSERT INTO Renting (renting_ID, renting_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID, Payment)
+INSERT INTO Renting (Renting_ID, Date, customer_ID, Room_number, hotelID, hotelChainID, Payment)
 VALUES
-	(123456789, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1, 4928374920185691),
-    (234567890, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2, 8712903456781234),
-    (345678901, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3, 6051298374621097),
-	(987654321, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1, 2189347650238916),
-	(543219876, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2, 7345128936479056);
+	(123456789, '2023-01-01',123456789, 10001, 1, 1, 'Credit Card'),
+    (234567890, '2023-01-02',234567890, 20002, 2, 2, 'Cash'),
+    (345678901, '2023-01-03', 345678901,30003, 3, 3, 'Paypal'),
+	(987654321, '2023-03-15', 456789012, 40025, 1, 1, 'Credit Card'),
+	(543219876, '2023-03-18', 567890123, 50023, 3, 2, 'Debit Card');
 
 
 --Table structure: Booking
 CREATE TABLE Booking(
 	booking_ID NUMERIC(9,0) PRIMARY KEY CHECK (booking_ID > 0),
     booking_date DATE NOT NULL,
-    Customer_first_name VARCHAR(50) NOT NULL,
-    Customer_middle_name VARCHAR(50),
-    Customer_last_name VARCHAR(50) NOT NULL,
+	customer_ID NUMERIC(9,0) not null,
     Room_number NUMERIC(5,0) CHECK (Room_number > 0),
     hotelID INT CHECK (hotelID > 0),
-    hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5)
+    hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
+	Payment VARCHAR(50) NOT NULL,
+    FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
+
 );
 
 --sample bookings
-INSERT INTO Booking (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
+INSERT INTO Booking (booking_ID, booking_date, customer_ID, Room_number, hotelID, hotelChainID, Payment)
 VALUES
-	(567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1),
-    (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2),
-    (345678912, '2023-01-03', 'Michael', 'James', 'Brown', 30003, 3, 3),
-	(234567891, '2023-03-15', 'Emily', NULL, 'Taylor', 40025, 1, 1),
-	(678912345, '2023-03-18', 'David', 'Wilson', 'Anderson', 50023, 3, 2);
+	(567891234, '2023-01-01',123456789, 10001, 1, 1, 'Credit Card'),
+    (456789123, '2023-01-02', 234567890, 20002, 2, 2, 'Cash'),
+    (345678912, '2023-01-03', 345678901, 30003, 3, 3, 'Paypal'),
+	(234567891, '2023-03-15', 456789012, 40025, 1, 1, 'Credit Card'),
+	(678912345, '2023-03-18', 567890123, 50023, 3, 2, 'Debit Card');
 
 
 --Queries

@@ -10,7 +10,7 @@ public class Renting {
     private int roomNumber;
     private int hotelId; //The id of the hotel the room belongs to
     private int hotelChainId; //The id of the hotel chain the room belongs to
-    private int payment; //The method of payment
+    private int payment; //The card number that will be charged for the room
 
     /**
      * Constructs a Renting object with the specified attributes
@@ -21,7 +21,7 @@ public class Renting {
      * @param roomNumber            The number of the room being rented
      * @param hotelId               The id of the hotel the rented room belongs to
      * @param hotelChainId          The id of the hotel chain the rented room belongs to
-     * @param payment               The method of payment for the room
+     * @param payment               The card number that will be charged for the room
      */
 
     public Renting (long Renting_ID, Date rentingDate, long customer_ID, int roomNumber, int hotelId, int hotelChainId, int payment){

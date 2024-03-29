@@ -17,7 +17,7 @@ public class EmployeeService {
     public List<Employee> getEmployees() throws Exception {
 
         // SQL query to retrieve all employees
-        String sql = "SELECT * FROM com.example.Employee";
+        String sql = "SELECT * FROM Employee";
 
         // Database connection object
         ConnectionDB db = new ConnectionDB();
@@ -79,7 +79,7 @@ public class EmployeeService {
      */
     public void insertEmployee(Employee employee) throws Exception {
         // SQL query to insert employee
-        String sql = "INSERT INTO com.example.Employee (SSN_SIN, hotelID, hotelChainID, first_name, middle_name, last_name, street, city, province_state, postal_code_zip_code, Roles_chef, Roles_maintenanceTechnician, Roles_receptionist, Roles_hotelKeeper) " +
+        String sql = "INSERT INTO Employee (SSN_SIN, hotelID, hotelChainID, first_name, middle_name, last_name, street, city, province_state, postal_code_zip_code, Roles_chef, Roles_maintenanceTechnician, Roles_receptionist, Roles_hotelKeeper) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Database connection object
@@ -129,7 +129,7 @@ public class EmployeeService {
         String message = "";
 
         // SQL query to delete employee by SSN/SIN
-        String sql = "DELETE FROM com.example.Employee WHERE SSN_SIN = ?";
+        String sql = "DELETE FROM Employee WHERE SSN_SIN = ?";
 
         // Database connection object
         ConnectionDB db = new ConnectionDB();
@@ -152,9 +152,9 @@ public class EmployeeService {
 
             // Check if any rows were affected (employee deleted)
             if (rowsAffected > 0) {
-                message = "com.example.Employee with SSN/SIN " + ssnSin + " successfully deleted!";
+                message = "Employee with SSN/SIN " + ssnSin + " successfully deleted!";
             } else {
-                message = "com.example.Employee with SSN/SIN " + ssnSin + " not found!";
+                message = "Employee with SSN/SIN " + ssnSin + " not found!";
             }
         } catch (Exception e) {
             // Throw any errors occurred
@@ -175,7 +175,7 @@ public class EmployeeService {
      */
     public void updateEmployee(Employee employee) throws Exception {
         // SQL query to update employee
-        String sql = "UPDATE com.example.Employee SET first_name = ?, middle_name = ?, last_name = ?, street = ?, city = ?, province_state = ?, postal_code_zip_code = ?, " +
+        String sql = "UPDATE Employee SET first_name = ?, middle_name = ?, last_name = ?, street = ?, city = ?, province_state = ?, postal_code_zip_code = ?, " +
                 "Roles_chef = ?, Roles_maintenanceTechnician = ?, Roles_receptionist = ?, Roles_hotelKeeper = ? WHERE SSN_SIN = ?";
 
         // Database connection object

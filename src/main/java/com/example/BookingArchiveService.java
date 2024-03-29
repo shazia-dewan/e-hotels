@@ -20,7 +20,7 @@ public class BookingArchiveService {
         List<BookingArchive> bookingArchives = new ArrayList<>();
 
         // SQL query to retrieve all booking archives
-        String sql = "SELECT * FROM com.example.BookingArchive";
+        String sql = "SELECT * FROM BookingArchive";
 
         // Database connection
         ConnectionDB db = new ConnectionDB();
@@ -63,7 +63,7 @@ public class BookingArchiveService {
      */
     public void insertBookingArchive(BookingArchive bookingArchive) throws Exception {
         // SQL query to insert a new booking archive
-        String sql = "INSERT INTO com.example.BookingArchive (booking_ID, booking_date, Customer_first_name, " +
+        String sql = "INSERT INTO BookingArchive (booking_ID, booking_date, Customer_first_name, " +
                 "Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -97,7 +97,7 @@ public class BookingArchiveService {
      */
     public void deleteBookingArchive(long bookingId) throws Exception {
         // SQL query to delete a booking archive by ID
-        String sql = "DELETE FROM com.example.BookingArchive WHERE booking_ID = ?";
+        String sql = "DELETE FROM BookingArchive WHERE booking_ID = ?";
 
         // Database connection
         ConnectionDB db = new ConnectionDB();
@@ -123,7 +123,7 @@ public class BookingArchiveService {
     public void updateBookingArchive(BookingArchive bookingArchive) throws Exception {
 
         // SQL query to update a booking archive
-        String sql = "UPDATE com.example.BookingArchive SET booking_date = ?, Customer_first_name = ?, " +
+        String sql = "UPDATE BookingArchive SET booking_date = ?, Customer_first_name = ?, " +
                 "Customer_middle_name = ?, Customer_last_name = ?, Room_number = ?, " +
                 "hotelID = ?, hotelChainID = ? WHERE booking_ID = ?";
 

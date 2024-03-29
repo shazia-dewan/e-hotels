@@ -15,7 +15,7 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public List<Customer> getCustomers() throws Exception {
-        String sql = "SELECT * FROM com.example.Customer";
+        String sql = "SELECT * FROM Customer";
         ConnectionDB db = new ConnectionDB();
         List<Customer> customers = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public boolean insertCustomer(Customer customer) throws Exception {
-        String sql = "INSERT INTO com.example.Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -89,7 +89,7 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public boolean updateCustomer(Customer customer) throws Exception {
-        String sql = "UPDATE com.example.Customer SET street=?, city=?, province_state=?, postal_code_zip_code=?, first_name=?, middle_name=?, last_name=?, DateofRegistration=? WHERE customer_ID=?";
+        String sql = "UPDATE Customer SET street=?, city=?, province_state=?, postal_code_zip_code=?, first_name=?, middle_name=?, last_name=?, DateofRegistration=? WHERE customer_ID=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -121,7 +121,7 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public boolean deleteCustomer(long customerId) throws Exception {
-        String sql = "DELETE FROM com.example.Customer WHERE customer_ID=?";
+        String sql = "DELETE FROM Customer WHERE customer_ID=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {

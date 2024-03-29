@@ -2,10 +2,11 @@
 <%@ page import="com.example.HotelChainService" %>
 <%@ page import="com.example.HotelChain" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     // get all hotel chains from database
     HotelChainService hotelChainService = new HotelChainService();
-    List<HotelChain> hotelChains = null;
+     List<HotelChain> hotelChains = new ArrayList<>();
     try {
         hotelChains = hotelChainService.getHotelChain();
     } catch (Exception e) {
@@ -43,7 +44,7 @@
             <select class="form-control" id="hotelChain" name="hotelChain">
                 <option value="">Select Hotel Chain</option>
                 <% for (HotelChain chain : hotelChains) { %>
-                    <option value="<%= chain.getHotelChainID() %>"></option>
+                    <option value="<%= chain.getHotelChainID() %>"><%= chain.getHotelChainID() %></option>
                 <% } %>
             </select>
         </div>

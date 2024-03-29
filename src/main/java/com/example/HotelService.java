@@ -8,7 +8,7 @@ import java.util.List;
 
 public class HotelService {
     public List<Hotel> getHotel() throws Exception {
-        String sql = "SELECT * FROM com.example.Hotel";
+        String sql = "SELECT * FROM Hotel";
         ConnectionDB db = new ConnectionDB();
         List<Hotel> hotels = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class HotelService {
     }
 
     public boolean insertHotel(Hotel hotel) throws Exception {
-        String sql = "INSERT INTO com.example.Hotel (hotel_ID, hotelChainID,num_rooms,email,star_rating,street,city,province,postal_code,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO Hotel (hotel_ID, hotelChainID,num_rooms,email,star_rating,street,city,province,postal_code,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -70,7 +70,7 @@ public class HotelService {
         }
     }
     public boolean updateHotel(Hotel hotel) throws Exception {
-        String sql = "UPDATE com.example.Hotel SET hotel_ID=?, hotelChainID=? ,num_rooms=?,email=?,star_rating=?,street=?,city=?,province=?,postal_code=?,phoneNumber=?";
+        String sql = "UPDATE Hotel SET hotel_ID=?, hotelChainID=? ,num_rooms=?,email=?,star_rating=?,street=?,city=?,province=?,postal_code=?,phoneNumber=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -96,7 +96,7 @@ public class HotelService {
     }
 
     public boolean deleteHotel(long hotelId) throws Exception {
-        String sql = "DELETE FROM com.example.Hotel WHERE hotel_ID=?";
+        String sql = "DELETE FROM Hotel WHERE hotel_ID=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {

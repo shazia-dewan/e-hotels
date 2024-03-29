@@ -4,9 +4,9 @@ package com.example;
 import java.util.Date;
 
 public class Renting {
-    private long rentingId;
+    private long Renting_ID;
     private Date rentingDate;
-    private long customerID;
+    private long customer_ID;
     private int roomNumber;
     private int hotelId; //The id of the hotel the room belongs to
     private int hotelChainId; //The id of the hotel chain the room belongs to
@@ -15,19 +15,19 @@ public class Renting {
     /**
      * Constructs a Renting object with the specified attributes
      *
-     * @param rentingId             The renting id
+     * @param Renting_ID             The renting id
      * @param rentingDate           The date of the renting
-     * @param customerID            Customer ID
+     * @param customer_ID            Customer ID
      * @param roomNumber            The number of the room being rented
      * @param hotelId               The id of the hotel the rented room belongs to
      * @param hotelChainId          The id of the hotel chain the rented room belongs to
      * @param payment               The method of payment for the room
      */
 
-    public Renting (long rentingId, Date rentingDate, long customerID, int roomNumber, int hotelId, int hotelChainId, int payment){
-        this.rentingId = rentingId;
+    public Renting (long Renting_ID, Date rentingDate, long customer_ID, int roomNumber, int hotelId, int hotelChainId, int payment){
+        this.Renting_ID = Renting_ID;
         this.rentingDate = rentingDate;
-        this.customerID = customerID;
+        this.customer_ID = customer_ID;
         this.roomNumber = roomNumber;
         this.hotelId = hotelId;
         this.hotelChainId = hotelChainId;
@@ -36,11 +36,11 @@ public class Renting {
 
     //getters and setters
     public long getRentingId() {
-        return rentingId;
+        return Renting_ID;
     }
 
-    public void setRentingId(long rentingId) {
-        this.rentingId = rentingId;
+    public void setRenting_ID(long Renting_ID) {
+        this.Renting_ID = Renting_ID;
     }
 
     public Date getRentingDate() {
@@ -52,11 +52,11 @@ public class Renting {
     }
 
     public long getCustomerID() {
-        return customerID;
+        return customer_ID;
     }
 
-    public void setCustomerID(long customerID) {
-        this.customerID = customerID;
+    public void setcustomer_ID(long customer_ID) {
+        this.customer_ID = customer_ID;
     }
 
     public int getRoomNumber() {

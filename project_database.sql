@@ -32,7 +32,7 @@ VALUES
 	(4, 8,'hotel4@gmail.com','769 ABC Street', 'Ottawa','ONTARIO','A8B3V8',123459999),
 	(5, 10,'hotel5@gmail.com','475 Zero Street', 'London','ONTARIO','P4Q9G9',123499999);
 
-Table Structure Hotel
+--Table Structure Hotel
 CREATE TABLE Hotel (
     hotelID int NOT NULL CHECK (hotelID >= 1 AND hotelID <= 1000),
     hotelChainID int NOT NULL CHECK (hotelChainID BETWEEN 1 AND 5),
@@ -151,7 +151,7 @@ VALUES
 --Table structure:Booking archive
 CREATE TABLE BookingArchive (
     booking_ID NUMERIC(9,0) PRIMARY KEY CHECK (booking_ID > 0),
-    booking_date DATE NOT NULL,
+    bookingDate DATE NOT NULL,
     Customer_first_name VARCHAR(50) NOT NULL,
     Customer_middle_name VARCHAR(50),
     Customer_last_name VARCHAR(50) NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE BookingArchive (
 );
 
 --Sample booking archive
-INSERT INTO BookingArchive (booking_ID, booking_date, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
+INSERT INTO BookingArchive (booking_ID, bookingDate, Customer_first_name, Customer_middle_name, Customer_last_name, Room_number, hotelID, hotelChainID)
 VALUES
     (567891234, '2023-01-01', 'John', 'Doe', 'Smith', 10001, 1, 1),
     (456789123, '2023-01-02', 'Jane', NULL, 'Johnson', 20002, 2, 2),
@@ -460,17 +460,17 @@ INSERT INTO Room (room_number,  HotelID, HotelChainID, problems_water, problems_
 --Table structure:Renting
 CREATE TABLE Renting (
 	Renting_ID NUMERIC(9,0) PRIMARY KEY CHECK (Renting_ID > 0),
-    Date DATE NOT NULL,
+    rentingDate DATE NOT NULL,
 	customer_ID NUMERIC(9,0) not null,
-    Room_number NUMERIC(5,0) CHECK (Room_number > 0),
+    room_number NUMERIC(5,0) CHECK (room_number > 0),
     hotelID INT CHECK (hotelID > 0),
     hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
-	Payment VARCHAR(50) NOT NULL,
+	payment VARCHAR(50) NOT NULL,
 	FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
 );
 
 --sample renting
-INSERT INTO Renting (Renting_ID, Date, customer_ID, Room_number, hotelID, hotelChainID, Payment)
+INSERT INTO Renting (Renting_ID, rentingDate, customer_ID, room_number, hotelID, hotelChainID, payment)
 VALUES
 	(123456789, '2023-01-01',123456789, 10001, 1, 1, 'Credit Card'),
     (234567890, '2023-01-02',234567890, 20002, 2, 2, 'Cash'),
@@ -482,9 +482,9 @@ VALUES
 --Table structure: Booking
 CREATE TABLE Booking(
 	booking_ID NUMERIC(9,0) PRIMARY KEY CHECK (booking_ID > 0),
-    booking_date DATE NOT NULL,
+    bookingDate DATE NOT NULL,
 	customer_ID NUMERIC(9,0) not null,
-    Room_number NUMERIC(5,0) CHECK (Room_number > 0),
+    room_number NUMERIC(5,0) CHECK (room_number > 0),
     hotelID INT CHECK (hotelID > 0),
     hotelChainID INT CHECK (hotelChainID BETWEEN 1 AND 5),
 	Payment VARCHAR(50) NOT NULL,
@@ -493,7 +493,7 @@ CREATE TABLE Booking(
 );
 
 --sample bookings
-INSERT INTO Booking (booking_ID, booking_date, customer_ID, Room_number, hotelID, hotelChainID, Payment)
+INSERT INTO Booking (booking_ID, bookingDate, customer_ID, room_number, hotelID, hotelChainID, Payment)
 VALUES
 	(567891234, '2023-01-01',123456789, 10001, 1, 1, 'Credit Card'),
     (456789123, '2023-01-02', 234567890, 20002, 2, 2, 'Cash'),
@@ -514,7 +514,8 @@ SELECT b.*,
        CONCAT(c.first_name, ' ', COALESCE(c.middle_name, ''), ' ', c.last_name) AS customer_full_name
 FROM Booking b
 JOIN Customer c ON b.customer_ID = c.customer_ID
-WHERE b.booking_date = '2023-01-01' -- Replace '2023-01-01' with the specific date you want to retrieve bookings for
+WHERE b.bookingDate = '2023-01-01';
+-- Replace '2023-01-01' with the specific date you want to retrieve bookings for
 
 --regular queries
 --rooms with all the amenities
@@ -539,8 +540,8 @@ BEGIN
     IF EXISTS (
         SELECT 1 FROM Booking
         WHERE room_number = NEW.room_number
-        AND booking_date = NEW.check_in_date
-        AND booking_id <> NEW.booking_id -- Exclude current booking from check
+        AND bookingDate = NEW.check_in_date
+        AND booking_Id <> NEW.booking_Id -- Exclude current booking from check
     ) THEN
         RAISE EXCEPTION 'Room is already booked for the specified date';
     END IF;
@@ -596,7 +597,7 @@ EXECUTE FUNCTION prevent_hotel_deletion_if_renting();
 
 --Indexes
 
-CREATE INDEX idx_booking_date ON Booking (booking_date);
+CREATE INDEX idx_bookingDate ON Booking (bookingDate);
 /*This index would be beneficial for queries that involve filtering or sorting bookings by date. For example, when retrieving bookings for a specific date range or when sorting bookings by date.
 Accelerates queries such as finding available rooms for a given date, checking booking history for a particular date, or analyzing booking trends over time. */
 

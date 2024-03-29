@@ -1,48 +1,48 @@
 package com.example;
 
 public class Customer {
-    private long customerId;
+    private long customer_ID;
     private String street;
     private String city;
-    private String provinceState;
-    private String postalCodeZipCode;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String dateOfRegistration;
+    private String province_state;
+    private String  postal_code_zip_code;
+    private String first_name;
+    private String middle_name;
+    private String last_name;
+    private String dateofRegistration;
 
     /**
      * Constructs a new com.example.Customer object with the specified attributes.
      *
-     * @param customerId         The unique identifier for the customer.
+     * @param customer_ID         The unique identifier for the customer.
      * @param street             The street address of the customer.
      * @param city               The city of the customer.
-     * @param provinceState      The province or state of the customer.
-     * @param postalCodeZipCode  The postal code or zip code of the customer.
-     * @param firstName          The first name of the customer.
-     * @param middleName         The middle name of the customer.
-     * @param lastName           The last name of the customer.
+     * @param province_state      The province or state of the customer.
+     * @param  postal_code_zip_code  The postal code or zip code of the customer.
+     * @param first_name          The first name of the customer.
+     * @param middle_name         The middle name of the customer.
+     * @param last_name           The last name of the customer.
      * @param dateOfRegistration The date of registration of the customer.
      */
-    public Customer(long customerId, String street, String city, String provinceState, String postalCodeZipCode, String firstName, String middleName, String lastName, String dateOfRegistration) {
-        this.customerId = customerId;
+    public Customer(long customer_ID, String street, String city, String province_state, String  postal_code_zip_code, String first_name, String middle_name, String last_name, String dateOfRegistration) {
+        this.customer_ID = customer_ID;
         this.street = street;
         this.city = city;
-        this.provinceState = provinceState;
-        this.postalCodeZipCode = postalCodeZipCode;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.dateOfRegistration = dateOfRegistration;
+        this.province_state = province_state;
+        this. postal_code_zip_code =  postal_code_zip_code;
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.dateofRegistration = dateOfRegistration;
     }
 
     // Getters and setters
     public long getCustomerId() {
-        return customerId;
+        return customer_ID;
     }
 
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+    public void setCustomerID(long customer_ID) {
+        this.customer_ID = customer_ID;
     }
 
     public String getStreet() {
@@ -62,51 +62,51 @@ public class Customer {
     }
 
     public String getProvinceState() {
-        return provinceState;
+        return province_state;
     }
 
-    public void setProvinceState(String provinceState) {
-        this.provinceState = provinceState;
+    public void setProvinceState(String province_state) {
+        this.province_state = province_state;
     }
 
     public String getPostalCodeZipCode() {
-        return postalCodeZipCode;
+        return  postal_code_zip_code;
     }
 
-    public void setPostalCodeZipCode(String postalCodeZipCode) {
-        this.postalCodeZipCode = postalCodeZipCode;
+    public void setPostalCodeZipCode(String  postal_code_zip_code) {
+        this. postal_code_zip_code =  postal_code_zip_code;
     }
 
     public String getFirstName() {
-        return firstName;
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String first_name) {
+        this.first_name = first_name;
     }
 
     public String getMiddleName() {
-        return middleName;
+        return middle_name;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setMiddleName(String middle_name) {
+        this.middle_name = middle_name;
     }
 
     public String getLastName() {
-        return lastName;
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getDateOfRegistration() {
-        return dateOfRegistration;
+        return dateofRegistration;
     }
 
     public void setDateOfRegistration(String dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
+        this.dateofRegistration = dateOfRegistration;
     }
 }
 

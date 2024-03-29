@@ -2,84 +2,84 @@ package com.example;
 
 public class Room {
     //attributes of com.example.Room
-    private int roomNumber; //the room number
+    private int room_number; //the room number
     private int hotelID;  //the id of the hotel the room belongs to
     private int hotelChainID; //the id of the hotel chain the room belongs to
-    private boolean isProblemsWater; //indicates if the room has water problems
-    private boolean isProblemsElectrical; //indicates if the room has electrical problems
-    private boolean isProblemsFurniture; //indicates if the room has furniture problems
-    private String problemsOther; //other problems with the room
+    private boolean problems_water; //indicates if the room has water problems
+    private boolean problems_electrical; //indicates if the room has electrical problems
+    private boolean problems_furniture; //indicates if the room has furniture problems
+    private String problems_other; //other problems with the room
     private double price; //price of the room
-    private boolean isAmenitiesTv; //indicates if a tv is included in the room
-    private boolean isAmenitiesWifi; //indicates if Wi-fi is included in the room
-    private boolean isAmenitiesAirCon; //indicates if air conditioning is included in the room
-    private boolean isAmenitiesFridge; //indicates if a fridge is included in the room
-    private boolean isAmenitiesToiletries; //indicates if toiletries are included in the room
-    private boolean isCapacitySingle; //indicates if the capacity is single (1 bed)
-    private boolean isCapacityDouble; //indicates if the capacity is double (2 beds)
-    private int guestCapacity; //the guest capacity of the room
-    private boolean isSeaView; //indicates if the room has a sea view
-    private boolean isMountainView; //indicates if the room has a mountain view
-    private boolean isExtendable; //indicates if the room can be extended (add a bed)
+    private boolean amenities_tv; //indicates if a tv is included in the room
+    private boolean amenities_wifi; //indicates if Wi-fi is included in the room
+    private boolean amenities_air_con; //indicates if air conditioning is included in the room
+    private boolean amenities_fridge; //indicates if a fridge is included in the room
+    private boolean amenities_toiletries; //indicates if toiletries are included in the room
+    private boolean capacities_single; //indicates if the capacity is single (1 bed)
+    private boolean capacities_double; //indicates if the capacity is double (2 beds)
+    private int guest_capacity; //the guest capacity of the room
+    private boolean sea_view; //indicates if the room has a sea view
+    private boolean mountain_view; //indicates if the room has a mountain view
+    private boolean extendable; //indicates if the room can be extended (add a bed)
 
     /**
      * Constructs a com.example.Room object with the specified attributes
-     * @param roomNumber                    The room number
+     * @param room_number                    The room number
      * @param hotelID                       The id of the hotel the room belongs to
      * @param hotelChainID                  The id of the hotel chain the room belongs to
      * @param isProblemsWater               Indicates if the room has water problems
-     * @param isProblemsElectrical          Indicates if the room has electrical problems
-     * @param isProblemsFurniture           Indicates if the room has furniture problems
-     * @param problemsOther               Other problems with the room
+     * @param problems_electrical          Indicates if the room has electrical problems
+     * @param problems_furniture           Indicates if the room has furniture problems
+     * @param problems_other               Other problems with the room
      * @param price                         Price of the room
-     * @param isAmenitiesTv                 Indicates if a tv is included in the room
-     * @param isAmenitiesWifi               Indicates if Wi-fi is included in the room
-     * @param isAmenitiesAirCon             Indicates if air conditioning is included in the room
-     * @param isAmenitiesFridge             Indicates if a fridge is included in the room
-     * @param isAmenitiesToiletries         Indicates if toiletries are included in the room
-     * @param isCapacitySingle              Indicates if the capacity is single (1 bed)
-     * @param isCapacityDouble              Indicates if the capacity is double (2 beds)
-     * @param guestCapacity                 The guest capacity of the room
-     * @param isSeaView                     Indicates if the room has a sea view
-     * @param isMountainView                Indicates if the room has a mountain view
-     * @param isExtendable                  Indicates if the room can be extended (add a bed)
+     * @param amenities_tv                 Indicates if a tv is included in the room
+     * @param amenities_wifi               Indicates if Wi-fi is included in the room
+     * @param amenities_air_con             Indicates if air conditioning is included in the room
+     * @param amenities_fridge             Indicates if a fridge is included in the room
+     * @param amenities_toiletries         Indicates if toiletries are included in the room
+     * @param capacities_single              Indicates if the capacity is single (1 bed)
+     * @param capacities_double              Indicates if the capacity is double (2 beds)
+     * @param guest_capacity                 The guest capacity of the room
+     * @param sea_view                     Indicates if the room has a sea view
+     * @param mountain_view                Indicates if the room has a mountain view
+     * @param extendable                  Indicates if the room can be extended (add a bed)
      */
 
-    public Room(int roomNumber, int hotelID, int hotelChainID, boolean isProblemsWater,
-                boolean isProblemsElectrical, boolean isProblemsFurniture, String problemsOther,
-                double price, boolean isAmenitiesTv, boolean isAmenitiesWifi, boolean isAmenitiesAirCon,
-                boolean isAmenitiesFridge, boolean isAmenitiesToiletries, boolean isCapacitySingle,
-                boolean isCapacityDouble, int guestCapacity, boolean isSeaView, boolean isMountainView,
-                boolean isExtendable){
+    public Room(int room_number, int hotelID, int hotelChainID, boolean isProblemsWater,
+                boolean problems_electrical, boolean problems_furniture, String problems_other,
+                double price, boolean amenities_tv, boolean amenities_wifi, boolean amenities_air_con,
+                boolean amenities_fridge, boolean amenities_toiletries, boolean capacities_single,
+                boolean capacities_double, int guest_capacity, boolean sea_view, boolean mountain_view,
+                boolean extendable){
 
-        this.roomNumber =roomNumber;
+        this.room_number =room_number;
         this.hotelID = hotelID;
         this.hotelChainID=hotelChainID;
-        this.isProblemsWater =isProblemsWater;
-        this.isProblemsElectrical = isProblemsElectrical;
-        this.isProblemsFurniture = isProblemsFurniture;
-        this.problemsOther = problemsOther;
+        this.problems_water =isProblemsWater;
+        this.problems_electrical = problems_electrical;
+        this.problems_furniture = problems_furniture;
+        this.problems_other = problems_other;
         this.price = price;
-        this.isAmenitiesTv = isAmenitiesTv;
-        this.isAmenitiesWifi = isAmenitiesWifi;
-        this.isAmenitiesAirCon = isAmenitiesAirCon;
-        this.isAmenitiesFridge = isAmenitiesFridge;
-        this.isAmenitiesToiletries = isAmenitiesToiletries;
-        this.isCapacitySingle = isCapacitySingle;
-        this.isCapacityDouble = isCapacityDouble;
-        this.guestCapacity = guestCapacity;
-        this.isSeaView = isSeaView;
-        this.isMountainView = isMountainView;
-        this.isExtendable = isExtendable;
+        this.amenities_tv = amenities_tv;
+        this.amenities_wifi = amenities_wifi;
+        this.amenities_air_con = amenities_air_con;
+        this.amenities_fridge = amenities_fridge;
+        this.amenities_toiletries = amenities_toiletries;
+        this.capacities_single = capacities_single;
+        this.capacities_double = capacities_double;
+        this.guest_capacity = guest_capacity;
+        this.sea_view = sea_view;
+        this.mountain_view = mountain_view;
+        this.extendable = extendable;
     }
 
     //getters and setters
     public int getRoomNumber() {
-        return roomNumber;
+        return room_number;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setRoomNumber(int room_number) {
+        this.room_number = room_number;
     }
 
     public int getHotelID() {
@@ -100,35 +100,35 @@ public class Room {
     }
 
     public boolean isProblemsWater() {
-        return isProblemsWater;
+        return problems_water;
     }
 
     public void setProblemsWater(boolean problemsWater) {
-        isProblemsWater = problemsWater;
+        problems_water = problemsWater;
     }
 
     public boolean isProblemsElectrical() {
-        return isProblemsElectrical;
+        return problems_electrical;
     }
 
     public void setProblemsElectrical(boolean problemsElectrical) {
-        isProblemsElectrical = problemsElectrical;
+        problems_electrical = problemsElectrical;
     }
 
     public boolean isProblemsFurniture() {
-        return isProblemsFurniture;
+        return problems_furniture;
     }
 
     public void setProblemsFurniture(boolean problemsFurniture) {
-        isProblemsFurniture = problemsFurniture;
+        problems_furniture = problemsFurniture;
     }
 
     public String getProblemsOther() {
-        return problemsOther;
+        return problems_other;
     }
 
-    public void setProblemsOther(String problemsOther) {
-        this.problemsOther = problemsOther;
+    public void setProblemsOther(String problems_other) {
+        this.problems_other = problems_other;
     }
 
     public double getPrice() {
@@ -140,91 +140,91 @@ public class Room {
     }
 
     public boolean isAmenitiesTv() {
-        return isAmenitiesTv;
+        return amenities_tv;
     }
 
     public void setAmenitiesTv(boolean amenitiesTv) {
-        isAmenitiesTv = amenitiesTv;
+        amenities_tv = amenitiesTv;
     }
 
     public boolean isAmenitiesWifi() {
-        return isAmenitiesWifi;
+        return amenities_wifi;
     }
 
     public void setAmenitiesWifi(boolean amenitiesWifi) {
-        isAmenitiesWifi = amenitiesWifi;
+        amenities_wifi = amenitiesWifi;
     }
 
     public boolean isAmenitiesAirCon() {
-        return isAmenitiesAirCon;
+        return amenities_air_con;
     }
 
     public void setAmenitiesAirCon(boolean amenitiesAirCon) {
-        isAmenitiesAirCon = amenitiesAirCon;
+        amenities_air_con = amenitiesAirCon;
     }
 
     public boolean isAmenitiesFridge() {
-        return isAmenitiesFridge;
+        return amenities_fridge;
     }
 
     public void setAmenitiesFridge(boolean amenitiesFridge) {
-        isAmenitiesFridge = amenitiesFridge;
+        amenities_fridge = amenitiesFridge;
     }
 
     public boolean isAmenitiesToiletries() {
-        return isAmenitiesToiletries;
+        return amenities_toiletries;
     }
 
     public void setAmenitiesToiletries(boolean amenitiesToiletries) {
-        isAmenitiesToiletries = amenitiesToiletries;
+        amenities_toiletries = amenitiesToiletries;
     }
 
     public boolean isCapacitySingle() {
-        return isCapacitySingle;
+        return capacities_single;
     }
 
     public void setCapacitySingle(boolean capacitySingle) {
-        isCapacitySingle = capacitySingle;
+        capacities_single = capacitySingle;
     }
 
     public boolean isCapacityDouble() {
-        return isCapacityDouble;
+        return capacities_double;
     }
 
     public void setCapacityDouble(boolean capacityDouble) {
-        isCapacityDouble = capacityDouble;
+        capacities_double = capacityDouble;
     }
 
     public int getGuestCapacity() {
-        return guestCapacity;
+        return guest_capacity;
     }
 
-    public void setGuestCapacity(int guestCapacity) {
-        this.guestCapacity = guestCapacity;
+    public void setguest_capacity(int guest_capacity) {
+        this.guest_capacity = guest_capacity;
     }
 
     public boolean isSeaView() {
-        return isSeaView;
+        return sea_view;
     }
 
     public void setSeaView(boolean seaView) {
-        isSeaView = seaView;
+        sea_view = seaView;
     }
 
     public boolean isMountainView() {
-        return isMountainView;
+        return mountain_view;
     }
 
     public void setMountainView(boolean mountainView) {
-        isMountainView = mountainView;
+        mountain_view = mountainView;
     }
 
     public boolean isExtendable() {
-        return isExtendable;
+        return extendable;
     }
 
     public void setExtendable(boolean extendable) {
-        isExtendable = extendable;
+        extendable = extendable;
     }
 
 }

@@ -2,20 +2,20 @@ package com.example;
 
 public class Employee {
     // Properties
-    private long ssnSin; // Social Security Number / Social Insurance Number
+    private long SSN_SIN; // Social Security Number / Social Insurance Number
     private int hotelId; // ID of the hotel where the employee works
     private int hotelChainId; // ID of the hotel chain where the hotel belongs
-    private String firstName; // First name of the employee
-    private String middleName; // Middle name of the employee
-    private String lastName; // Last name of the employee
+    private String first_name; // First name of the employee
+    private String middle_name; // Middle name of the employee
+    private String last_name; // Last name of the employee
     private String street; // Street address of the employee
     private String city; // City of the employee
-    private String provinceState; // Province or state of the employee
-    private String postalCodeZipCode; // Postal code or ZIP code of the employee
-    private boolean isChef; // Indicates if the employee is a chef
-    private boolean isMaintenanceTechnician; // Indicates if the employee is a maintenance technician
-    private boolean isReceptionist; // Indicates if the employee is a receptionist
-    private boolean isHotelKeeper; // Indicates if the employee is a hotel keeper
+    private String province_state; // Province or state of the employee
+    private String postal_code_zip_code; // Postal code or ZIP code of the employee
+    private boolean Roles_chef; // Indicates if the employee is a chef
+    private boolean Roles_maintenanceTechnician; // Indicates if the employee is a maintenance technician
+    private boolean Roles_receptionist; // Indicates if the employee is a receptionist
+    private boolean Roles_hotelKeeper; // Indicates if the employee is a hotel keeper
 
     /**
      * Constructs an com.example.Employee object with the specified attributes.
@@ -30,37 +30,37 @@ public class Employee {
      * @param city                   City of the employee
      * @param provinceState          Province or state of the employee
      * @param postalCodeZipCode      Postal code or ZIP code of the employee
-     * @param isChef                 Indicates if the employee is a chef
-     * @param isMaintenanceTechnician Indicates if the employee is a maintenance technician
-     * @param isReceptionist         Indicates if the employee is a receptionist
-     * @param isHotelKeeper          Indicates if the employee is a hotel keeper
+     * @param Roles_chef                 Indicates if the employee is a chef
+     * @param Roles_maintenanceTechnician Indicates if the employee is a maintenance technician
+     * @param Roles_receptionist         Indicates if the employee is a receptionist
+     * @param Roles_hotelKeeper          Indicates if the employee is a hotel keeper
      */
     public Employee(long ssnSin, int hotelId, int hotelChainId, String firstName, String middleName, String lastName,
-                    String street, String city, String provinceState, String postalCodeZipCode, boolean isChef,
-                    boolean isMaintenanceTechnician, boolean isReceptionist, boolean isHotelKeeper) {
-        this.ssnSin = ssnSin;
+                    String street, String city, String provinceState, String postalCodeZipCode, boolean Roles_chef,
+                    boolean Roles_maintenanceTechnician, boolean Roles_receptionist, boolean Roles_hotelKeeper) {
+        this.SSN_SIN = ssnSin;
         this.hotelId = hotelId;
         this.hotelChainId = hotelChainId;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
+        this.first_name = firstName;
+        this.middle_name = middleName;
+        this.last_name = lastName;
         this.street = street;
         this.city = city;
-        this.provinceState = provinceState;
-        this.postalCodeZipCode = postalCodeZipCode;
-        this.isChef = isChef;
-        this.isMaintenanceTechnician = isMaintenanceTechnician;
-        this.isReceptionist = isReceptionist;
-        this.isHotelKeeper = isHotelKeeper;
+        this.province_state = provinceState;
+        this.postal_code_zip_code = postalCodeZipCode;
+        this.Roles_chef = Roles_chef;
+        this.Roles_maintenanceTechnician = Roles_maintenanceTechnician;
+        this.Roles_receptionist = Roles_receptionist;
+        this.Roles_hotelKeeper = Roles_hotelKeeper;
     }
 
     // Getters and Setters
     public long getSsnSin() {
-        return ssnSin;
+        return SSN_SIN;
     }
 
     public void setSsnSin(long ssnSin) {
-        this.ssnSin = ssnSin;
+        this.SSN_SIN = ssnSin;
     }
 
     public int getHotelId() {
@@ -80,27 +80,27 @@ public class Employee {
     }
 
     public String getFirstName() {
-        return firstName;
+        return first_name;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.first_name = firstName;
     }
 
     public String getMiddleName() {
-        return middleName;
+        return middle_name;
     }
 
     public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+        this.middle_name = middleName;
     }
 
     public String getLastName() {
-        return lastName;
+        return last_name;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.last_name = lastName;
     }
 
     public String getStreet() {
@@ -120,51 +120,51 @@ public class Employee {
     }
 
     public String getProvinceState() {
-        return provinceState;
+        return province_state;
     }
 
     public void setProvinceState(String provinceState) {
-        this.provinceState = provinceState;
+        this.province_state = provinceState;
     }
 
     public String getPostalCodeZipCode() {
-        return postalCodeZipCode;
+        return postal_code_zip_code;
     }
 
     public void setPostalCodeZipCode(String postalCodeZipCode) {
-        this.postalCodeZipCode = postalCodeZipCode;
+        this.postal_code_zip_code = postalCodeZipCode;
     }
 
     public boolean isChef() {
-        return isChef;
+        return Roles_chef;
     }
 
     public void setChef(boolean chef) {
-        isChef = chef;
+        Roles_chef = chef;
     }
 
     public boolean isMaintenanceTechnician() {
-        return isMaintenanceTechnician;
+        return Roles_maintenanceTechnician;
     }
 
     public void setMaintenanceTechnician(boolean maintenanceTechnician) {
-        isMaintenanceTechnician = maintenanceTechnician;
+        Roles_maintenanceTechnician = maintenanceTechnician;
     }
 
     public boolean isReceptionist() {
-        return isReceptionist;
+        return Roles_receptionist;
     }
 
     public void setReceptionist(boolean receptionist) {
-        isReceptionist = receptionist;
+        Roles_receptionist = receptionist;
     }
 
     public boolean isHotelKeeper() {
-        return isHotelKeeper;
+        return Roles_hotelKeeper;
     }
 
     public void setHotelKeeper(boolean hotelKeeper) {
-        isHotelKeeper = hotelKeeper;
+        Roles_hotelKeeper = hotelKeeper;
     }
 }
 

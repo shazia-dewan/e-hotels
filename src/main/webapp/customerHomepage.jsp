@@ -14,15 +14,25 @@
     }
 %>
 <!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> Home Page </title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+</head>
 <html>
 <head>
     <title>Customer Home Page</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+    <jsp:include page="navbar.jsp"/>
 <div class="container mt-5">
     <h2>Find Available Rooms</h2>
-    <form action="searchRooms" method="get"> <!-- Assume action=searchRooms will handle the search logic -->
+    <form action="searchResults.jsp" method="get"> <!-- Redirect to searchResults.jsp after form submission -->
         <div class="form-group">
             <label for="startDate">Start Date</label>
             <input type="date" class="form-control" id="startDate" name="startDate" required>
@@ -65,9 +75,12 @@
             <label for="priceRange">Price Range</label>
             <input type="text" class="form-control" id="priceRange" name="priceRange" placeholder="e.g., 100-200">
         </div>
+        <!-- Removed nested form -->
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
+
+
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.example;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -242,6 +243,99 @@ public class RoomService {
 
         return message;
 
+    }
+
+    public static List<Room> searchRooms(String startDate, String endDate, Integer roomCapacity, String area, Integer hotelChainID, Integer category, Integer totalRooms, String priceRange) throws SQLException {
+        List<Room> rooms = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM room WHERE 1=1 ");
+        List<Object> parameters = new ArrayList<>();
+
+        if (roomCapacity != null) {
+                sql.append("AND guest_capacity >= ? ");
+            parameters.add(roomCapacity);
+        }
+
+        if (area != null && !area.trim().isEmpty()) {
+            sql.append("AND area LIKE ? ");
+            parameters.add("%" + area + "%");
+        }
+
+        if (hotelChainID != null) {
+                sql.append("AND hotelChainId = ? ");
+            parameters.add(hotelChainID);
+        }
+
+        if (category != null) {
+            sql.append("AND category = ? ");
+            parameters.add(category);
+        }
+
+        if (totalRooms != null) {
+            sql.append("AND total_rooms >= ? ");
+            parameters.add(totalRooms);
+        }
+
+        if (priceRange != null && !priceRange.trim().isEmpty()) {
+            String[] priceBounds = priceRange.split("-");
+            if (priceBounds.length == 2) {
+                    sql.append("AND price BETWEEN ? AND ? ");
+                parameters.add(Double.parseDouble(priceBounds[0]));
+                parameters.add(Double.parseDouble(priceBounds[1]));
+            }
+        }
+
+        // Connection object from ConnectionDB
+        ConnectionDB db = new ConnectionDB();
+
+        try (Connection con = db.getConnection(); // Try to connect to the database
+             PreparedStatement stmt = con.prepareStatement(sql.toString())) { // Prepare SQL statement
+
+            // Setting the parameters for the PreparedStatement
+            for (int i = 0; i < parameters.size(); i++) {
+                stmt.setObject(i + 1, parameters.get(i));
+            }
+
+            // Execute the query
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Iterate through the result set
+                while (rs.next()) {
+                    // Create new Room object based on the schema you have
+                    Room room = new Room(
+                            rs.getInt("room_number"),
+                            rs.getInt("HotelID"),
+                            rs.getInt("HotelChainID"),
+                            rs.getBoolean("problems_water"),
+                            rs.getBoolean("problems_electrical"),
+                            rs.getBoolean("problems_furniture"),
+                            rs.getString("problems_other"),
+                            rs.getDouble("price"),
+                            rs.getBoolean("amenities_tv"),
+                            rs.getBoolean("amenities_wifi"),
+                            rs.getBoolean("amenities_air_con"),
+                            rs.getBoolean("amenities_fridge"),
+                            rs.getBoolean("amenities_toiletries"),
+                            rs.getBoolean("capacities_single"),
+                            rs.getBoolean("capacities_double"),
+                            rs.getInt("guest_capacity"),
+                            rs.getBoolean("sea_view"),
+                            rs.getBoolean("mountain_view"),
+                            rs.getBoolean("extendable")
+                            // Continue initializing with the rest of your columns
+                    );
+
+                    // Append room to the rooms list
+                    rooms.add(room);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Proper exception handling goes here
+        } finally {
+            db.close();
+        }
+
+        // Return the list of rooms
+        return rooms;
     }
 
 }

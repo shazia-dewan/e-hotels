@@ -16,7 +16,7 @@
                 <div class="text-center">
                     <h2>Welcome, Admin!</h2>
                     <p>Please select one of the following options:</p>
-                    <button type="button" class="btn btn-success btn-lg btn-block mt-4">Customer Management</button>
+                    <a href="customerManagement.jsp" class="btn btn-success btn-lg btn-block mt-4">Customer Management</a>
                     <button type="button" class="btn btn-success btn-lg btn-block mt-4">Employee Management</button>
                     <button type="button" class="btn btn-success btn-lg btn-block mt-4">Hotel Management</button>
                     <button type="button" class="btn btn-success btn-lg btn-block mt-4">Room Management</button>

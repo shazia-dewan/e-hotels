@@ -25,6 +25,13 @@
         </div>
     </div>
 
+    <div class="text-center mt-5">
+        <h3>View Available Rooms:</h3>
+        <a href="view1.jsp" class="btn btn-info mt-2">View 1</a>
+        <h3 class="mt-4">Aggregated Capacity:</h3>
+        <a href="view2.jsp" class="btn btn-info mt-2">View 2</a>
+    </div>
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

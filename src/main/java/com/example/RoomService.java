@@ -248,42 +248,60 @@ public class RoomService {
     public static List<Room> searchRooms(String startDate, String endDate, Integer roomCapacity, String area, Integer hotelChainID, Integer category, Integer totalRooms, String priceRange) throws SQLException {
         List<Room> rooms = new ArrayList<>();
 
-        StringBuilder sql = new StringBuilder("SELECT * FROM room WHERE 1=1 ");
+        StringBuilder sql = new StringBuilder("SELECT r.* FROM room r ");
+        sql.append("INNER JOIN hotel h ON r.hotelID = h.hotelID WHERE 1=1 ");
         List<Object> parameters = new ArrayList<>();
 
         if (roomCapacity != null) {
-                sql.append("AND guest_capacity >= ? ");
+            sql.append("AND r.guest_capacity >= ? ");
             parameters.add(roomCapacity);
         }
 
         if (area != null && !area.trim().isEmpty()) {
-            sql.append("AND area LIKE ? ");
+            sql.append("AND h.city LIKE ? ");
             parameters.add("%" + area + "%");
         }
 
         if (hotelChainID != null) {
-                sql.append("AND hotelChainId = ? ");
+            sql.append("AND r.hotelChainID = ? ");
             parameters.add(hotelChainID);
         }
 
         if (category != null) {
-            sql.append("AND category = ? ");
+            sql.append("AND h.star_rating = ? ");
             parameters.add(category);
         }
 
         if (totalRooms != null) {
-            sql.append("AND total_rooms >= ? ");
+            sql.append("AND h.num_rooms >= ? ");
             parameters.add(totalRooms);
         }
+
 
         if (priceRange != null && !priceRange.trim().isEmpty()) {
             String[] priceBounds = priceRange.split("-");
             if (priceBounds.length == 2) {
-                    sql.append("AND price BETWEEN ? AND ? ");
+                    sql.append("AND r.price BETWEEN ? AND ? ");
                 parameters.add(Double.parseDouble(priceBounds[0]));
                 parameters.add(Double.parseDouble(priceBounds[1]));
             }
         }
+
+        // Additional condition to check for date conflicts
+        if (startDate != null) {
+            sql.append("AND NOT EXISTS (");
+            sql.append("SELECT 1 FROM booking b ");
+            sql.append("WHERE b.room_number = r.room_number ");
+            sql.append("AND ?::date = b.bookingDate ");
+            sql.append("UNION ");
+            sql.append("SELECT 1 FROM renting rt ");
+            sql.append("WHERE rt.room_number = r.room_number ");
+            sql.append("AND ?::date = rt.rentingDate ");
+            sql.append(")");
+            parameters.add(startDate);
+            parameters.add(startDate);
+        }
+
 
         // Connection object from ConnectionDB
         ConnectionDB db = new ConnectionDB();

@@ -184,4 +184,44 @@ public class BookingService{
 
     }
 
+    public Booking getBookingById(long bookingId) throws Exception {
+        // SQL query to retrieve a booking by its ID
+        String sql = "SELECT * FROM Booking WHERE booking_ID = ?";
+
+        //database connection
+        ConnectionDB db = new ConnectionDB();
+
+        try (Connection con = db.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            // Set the booking ID parameter in the prepared statement
+            stmt.setLong(1, bookingId);
+
+            // Execute the query
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // If a booking with the given ID is found, create a Booking object
+                Booking booking = new Booking(
+                        rs.getLong("booking_ID"),
+                        rs.getDate("bookingDate"),
+                        rs.getLong("customer_ID"),
+                        rs.getInt("Room_number"),
+                        rs.getInt("hotelID"),
+                        rs.getInt("hotelChainID")
+                        // Add other attributes as needed
+                );
+
+                // Close the ResultSet and return the Booking object
+                rs.close();
+                return booking;
+            } else {
+                // If no booking with the given ID is found, return null
+                return null;
+            }
+        } catch (Exception e) {
+            // Handle any exceptions that occur during the database operation
+            throw new Exception("Error retrieving booking by ID: " + e.getMessage());
+        }
+    }
+
 }

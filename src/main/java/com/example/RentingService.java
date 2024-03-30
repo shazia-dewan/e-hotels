@@ -186,4 +186,33 @@ public class RentingService {
 
     }
 
+    public void createRentingFromBooking(Booking booking, long payment) throws Exception {
+        // Database connection object
+        ConnectionDB db = new ConnectionDB();
+
+        // SQL query to insert a new renting
+        String insertRentingSQL = "INSERT INTO Renting (rentingDate, customer_ID, " +
+                "room_number, hotelID, hotelChainID, payment) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        // Try to connect to the database and catch any exceptions
+        try (Connection con = db.getConnection();
+             PreparedStatement stmt = con.prepareStatement(insertRentingSQL)) {
+
+            // Set values for the prepared statement
+            stmt.setDate(1, new java.sql.Date(System.currentTimeMillis())); // Current date as renting date
+            stmt.setLong(2, booking.getCustomerID());
+            stmt.setInt(3, booking.getRoomNumber());
+            stmt.setInt(4, booking.getHotelId());
+            stmt.setInt(5, booking.getHotelChainId());
+            stmt.setLong(6, payment); // Set the payment information passed as parameter
+
+            // Execute the query to insert the renting
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            // Throw error if an exception occurs during the database operation
+            throw new Exception("Error while creating renting from booking: " + e.getMessage());
+        }
+    }
+
 }

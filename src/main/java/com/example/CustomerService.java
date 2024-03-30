@@ -57,7 +57,7 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public boolean insertCustomer(Customer customer) throws Exception {
-        String sql = "INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?::DATE)";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
@@ -89,29 +89,74 @@ public class CustomerService {
      * @throws Exception when an error occurs while trying to connect to the database.
      */
     public boolean updateCustomer(Customer customer) throws Exception {
-        String sql = "UPDATE Customer SET street=?, city=?, province_state=?, postal_code_zip_code=?, first_name=?, middle_name=?, last_name=?, DateofRegistration=? WHERE customer_ID=?";
+        StringBuilder sql = new StringBuilder("UPDATE Customer SET ");
+        List<Object> parameters = new ArrayList<>();
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, customer.getStreet());
-            stmt.setString(2, customer.getCity());
-            stmt.setString(3, customer.getProvinceState());
-            stmt.setString(4, customer.getPostalCodeZipCode());
-            stmt.setString(5, customer.getFirstName());
-            stmt.setString(6, customer.getMiddleName());
-            stmt.setString(7, customer.getLastName());
-            stmt.setString(8, customer.getDateOfRegistration());
-            stmt.setLong(9, customer.getCustomerId());
+            // Add conditions for non-empty fields
+            if (!customer.getStreet().isEmpty()) {
+                sql.append("street=?, ");
+                parameters.add(customer.getStreet());
+            }
+            if (!customer.getCity().isEmpty()) {
+                sql.append("city=?, ");
+                parameters.add(customer.getCity());
+            }
+            if (!customer.getProvinceState().isEmpty()) {
+                sql.append("province_state=?, ");
+                parameters.add(customer.getProvinceState());
+            }
+            if (!customer.getPostalCodeZipCode().isEmpty()) {
+                sql.append("postal_code_zip_code=?, ");
+                parameters.add(customer.getPostalCodeZipCode());
+            }
+            if (!customer.getFirstName().isEmpty()) {
+                sql.append("first_name=?, ");
+                parameters.add(customer.getFirstName());
+            }
+            if (!customer.getMiddleName().isEmpty()) {
+                sql.append("middle_name=?, ");
+                parameters.add(customer.getMiddleName());
+            }
+            if (!customer.getLastName().isEmpty()) {
+                sql.append("last_name=?, ");
+                parameters.add(customer.getLastName());
+            }
+
+            // Remove the last comma and space
+            sql.setLength(sql.length() - 2);
+
+            // Add the WHERE clause
+            sql.append(" WHERE customer_ID=?");
+
+            // Add the customer ID parameter
+            parameters.add(customer.getCustomerId());
+
+            // Prepare the statement
+            PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+            // Set parameter values
+            int index = 1;
+            for (Object parameter : parameters) {
+                stmt.setObject(index++, parameter);
+            }
+
+            // Execute the update
             int rowsAffected = stmt.executeUpdate();
+
+            // Close resources
             stmt.close();
             con.close();
             db.close();
+
             return rowsAffected > 0;
         } catch (Exception e) {
             throw new Exception("Error while updating customer: " + e.getMessage());
         }
     }
+
+
 
     /**
      * Method to delete a customer from the database by customer ID.
@@ -136,6 +181,42 @@ public class CustomerService {
             throw new Exception("Error while deleting customer: " + e.getMessage());
         }
     }
+
+    public Customer getCustomerFromID(long customerId) throws Exception {
+        String sql = "SELECT * FROM Customer WHERE customer_ID=?";
+        ConnectionDB db = new ConnectionDB();
+
+        try (Connection con = db.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setLong(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Customer customer = new Customer(
+                        rs.getLong("customer_ID"),
+                        rs.getString("street"),
+                        rs.getString("city"),
+                        rs.getString("province_state"),
+                        rs.getString("postal_code_zip_code"),
+                        rs.getString("first_name"),
+                        rs.getString("middle_name"),
+                        rs.getString("last_name"),
+                        rs.getString("DateofRegistration") // Assuming this constructor exists
+                );
+                return customer;
+            }
+
+            else {
+                return null; // Or handle this case as you see fit
+            }
+        } catch (Exception e) {
+            throw new Exception("Error while fetching customer: " + e.getMessage());
+        } finally {
+            db.close(); // Ensure the database connection is closed
+        }
+    }
+
 
 
 

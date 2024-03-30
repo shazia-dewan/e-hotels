@@ -4,6 +4,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Insert Customer</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Include any other CSS stylesheets -->
+</head>
+<head>
+    <meta charset="UTF-8">
     <title>Employee Home Page</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>

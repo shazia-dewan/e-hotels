@@ -20,8 +20,8 @@
         <h3 class="text-center mt-4">I am a:</h3>
         <div class="d-flex justify-content-center mt-3">
              <a href="customerHomepage.jsp" class="btn btn-primary mx-2">Customer</a>
-             <a href="#" class="btn btn-success mx-2" disabled>Employee</a>
-             <a href="#" class="btn btn-danger mx-2" disabled>Admin</a>
+             <a href="employeeHomepage.jsp" class="btn btn-success mx-2">Employee</a>
+             <a href="adminHomepage.jsp" class="btn btn-danger mx-2" disabled>Admin</a>
         </div>
     </div>
 

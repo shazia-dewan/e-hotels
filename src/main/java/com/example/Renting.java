@@ -34,6 +34,7 @@ public class Renting {
         this.payment = payment;
     }
 
+
     //getters and setters
     public long getRentingId() {
         return Renting_ID;

@@ -17,7 +17,7 @@
                     <h2>Welcome, Employee!</h2>
                     <p>Please select one of the following options:</p>
                     <a href="bookingToRenting.jsp" class="btn btn-primary btn-lg btn-block mt-4">Transfer Booking to Renting</a>
-                    <button type="button" class="btn btn-success btn-lg btn-block mt-4">Create New Renting</button>
+                    <a href="createNewRenting.jsp" class="btn btn-success btn-lg btn-block mt-4">Create New Renting</a>
                 </div>
             </div>
         </div>

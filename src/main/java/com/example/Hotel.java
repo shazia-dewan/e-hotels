@@ -3,7 +3,7 @@ package com.example;
 public class Hotel {
     private long hotelID;
     private long hotelChainID;
-    private Integer num_rooms;
+    private int num_rooms;
     private String email;
     private double star_rating;
     private String street;

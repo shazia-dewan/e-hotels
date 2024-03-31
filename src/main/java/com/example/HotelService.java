@@ -108,9 +108,6 @@ public class HotelService {
 
 
 
-            sql.append("hotelChainID=?, ");
-            parameters.add(hotel.getHotelChainID());
-
             sql.append("star_rating=?, ");
             parameters.add(hotel.getStar_rating());
             sql.append("num_rooms=?, ");
@@ -126,6 +123,9 @@ public class HotelService {
 
             // Add the employee ID parameter
             parameters.add(hotel.getHotel_ID());
+
+            sql.append(" AND hotelChainID=? ");
+            parameters.add(hotel.getHotelChainID());
 
             // Prepare the statement
             PreparedStatement stmt = con.prepareStatement(sql.toString());

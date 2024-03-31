@@ -46,17 +46,17 @@
 
             <div class="form-group">
                    <label for="num_rooms">num_rooms</label>
-                   <input type="text" class="form-control" id="num_rooms" name="num_rooms" required>
+                   <input type="text" class="form-control" id="num_rooms" name="num_rooms" >
             </div>
 
             <div class="form-group">
                                <label for="phoneNumber">Phone Number</label>
-                               <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                               <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" >
                         </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email" required>
+                <input type="text" class="form-control" id="email" name="email" >
 
             </div>
             <div class="form-group">
@@ -65,22 +65,22 @@
             </div>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" name="street" required>
+                <input type="text" class="form-control" id="street" name="street" >
             </div>
 
             <div class="form-group">
                 <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city" required>
+                <input type="text" class="form-control" id="city" name="city" >
             </div>
 
             <div class="form-group">
                 <label for="province">Province/State</label>
-                <input type="text" class="form-control" id="province" name="province" required>
+                <input type="text" class="form-control" id="province" name="province" >
             </div>
 
             <div class="form-group">
                 <label for="PostalCode">Postal Code/Zip Code</label>
-                <input type="text" class="form-control" id="PostalCode" name="PostalCode" required>
+                <input type="text" class="form-control" id="PostalCode" name="PostalCode" >
             </div>
 
 

@@ -1,6 +1,7 @@
 package com.example;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class RentingService {
                         rs.getInt("Room_number"),
                         rs.getInt("hotelID"),
                         rs.getInt("hotelChainID"),
-                        rs.getInt("Payment")
+                        rs.getLong("Payment")
                 );
 
                 //append renting to rentings list
@@ -99,7 +100,7 @@ public class RentingService {
             stmt.setInt(4, renting.getRoomNumber());
             stmt.setInt(5, renting.getHotelId());
             stmt.setInt(6, renting.getHotelChainId());
-            stmt.setInt(7,renting.getPayment());
+            stmt.setLong(7,renting.getPayment());
 
             //execute the query
             stmt.executeUpdate();
@@ -140,7 +141,7 @@ public class RentingService {
             stmt.setInt(3, renting.getRoomNumber());
             stmt.setInt(4, renting.getHotelId());
             stmt.setInt(5, renting.getHotelChainId());
-            stmt.setInt(6, renting.getPayment());
+            stmt.setLong(6, renting.getPayment());
             stmt.setLong(7, renting.getRentingId());
 
             // Execute the query
@@ -213,6 +214,36 @@ public class RentingService {
             // Throw error if an exception occurs during the database operation
             throw new Exception("Error while creating renting from booking: " + e.getMessage());
         }
+    }
+
+    public void createNewRenting(Renting renting) throws Exception{
+        // Database connection object
+        ConnectionDB db = new ConnectionDB();
+
+        // SQL query to insert a new renting
+        String insertRentingSQL = "INSERT INTO Renting (rentingDate, customer_ID, " +
+                "room_number, hotelID, hotelChainID, payment) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        // Try to connect to the database and catch any exceptions
+        try (Connection con = db.getConnection();
+             PreparedStatement stmt = con.prepareStatement(insertRentingSQL)) {
+
+            // Set values for the prepared statement
+            stmt.setDate(1, (Date) renting.getRentingDate()); // Current date as renting date
+            stmt.setLong(2, renting.getCustomerID());
+            stmt.setInt(3, renting.getRoomNumber());
+            stmt.setInt(4, renting.getHotelId());
+            stmt.setInt(5, renting.getHotelChainId());
+            stmt.setLong(6, renting.getPayment()); // Set the payment information passed as parameter
+
+            // Execute the query to insert the renting
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            // Throw error if an exception occurs during the database operation
+            throw new Exception("Error while creating renting from booking: " + e.getMessage());
+        }
+
     }
 
 }

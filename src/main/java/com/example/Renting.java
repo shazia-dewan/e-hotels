@@ -10,7 +10,7 @@ public class Renting {
     private int roomNumber;
     private int hotelId; //The id of the hotel the room belongs to
     private int hotelChainId; //The id of the hotel chain the room belongs to
-    private int payment; //The card number that will be charged for the room
+    private long payment; //The card number that will be charged for the room
 
     /**
      * Constructs a Renting object with the specified attributes
@@ -24,7 +24,7 @@ public class Renting {
      * @param payment               The card number that will be charged for the room
      */
 
-    public Renting (long Renting_ID, Date rentingDate, long customer_ID, int roomNumber, int hotelId, int hotelChainId, int payment){
+    public Renting (long Renting_ID, Date rentingDate, long customer_ID, int roomNumber, int hotelId, int hotelChainId, long payment){
         this.Renting_ID = Renting_ID;
         this.rentingDate = rentingDate;
         this.customer_ID = customer_ID;
@@ -34,6 +34,15 @@ public class Renting {
         this.payment = payment;
     }
 
+    //constructor without rentingID
+    public Renting (Date rentingDate, long customer_ID, int roomNumber, int hotelId, int hotelChainId, long payment){
+        this.rentingDate = rentingDate;
+        this.customer_ID = customer_ID;
+        this.roomNumber = roomNumber;
+        this.hotelId = hotelId;
+        this.hotelChainId = hotelChainId;
+        this.payment = payment;
+    }
 
     //getters and setters
     public long getRentingId() {
@@ -84,11 +93,11 @@ public class Renting {
         this.hotelChainId = hotelChainId;
     }
 
-    public int getPayment() {
+    public long getPayment() {
         return payment;
     }
 
-    public void setPayment(int payment) {
+    public void setPayment(long payment) {
         this.payment = payment;
     }
 }

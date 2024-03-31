@@ -40,11 +40,11 @@
     <%
         // Retrieve renting information from the request parameters
                 Date rentingDate = Date.valueOf(request.getParameter("rentingDate")); // Parse renting date directly as a Date object
-                int customerId = Integer.parseInt(request.getParameter("customerId"));
+                int customerId = Integer.parseInt(request.getParameter("customerID"));
                 int roomNumber = Integer.parseInt(request.getParameter("roomNumber"));
-                int hotelId = Integer.parseInt(request.getParameter("hotelId"));
-                int hotelChainId = Integer.parseInt(request.getParameter("hotelChainId"));
-                int payment = Integer.parseInt(request.getParameter("payment"));
+                int hotelId = Integer.parseInt(request.getParameter("hotelID"));
+                int hotelChainId = Integer.parseInt(request.getParameter("hotelChainID"));
+                long payment = Long.parseLong(request.getParameter("payment"));
 
          // Validate payment length
                 if (String.valueOf(payment).length() != 16) {
@@ -66,7 +66,8 @@
 
                         try {
                             // Call the insertRenting method from the RentingService to insert the renting into the database
-                            rentingService.insertRenting(renting);
+                            RentingService rentingService = new RentingService();
+                            rentingService.createNewRenting(renting);
                 %>
                             <div class="alert alert-success" role="alert">
                                 Renting information successfully inserted into the database!

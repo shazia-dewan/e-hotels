@@ -89,14 +89,14 @@ public class RoomService {
      * @throws Exception when trying to connect to the database or execute the query
      */
 
-    public void insertRoom(Room room) throws Exception{
+    public boolean insertRoom(Room room) throws Exception{
 
         //database connection object
         ConnectionDB db = new ConnectionDB();
 
-        //SQL query to insert room
-        String insertRoomSQL = "INSERT INTO Room (room_number, HotelID, HotelChainID, problems_water, problems_electrical, problems_furniture, problems_other, price, amenities_tv, amenities_wifi, amenities_air_con, amenities_fridge, amenities_toiletries, capacities_single, capacities_double, guest_capacity, sea_view, mountain_view, extendable" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertRoomSQL = "INSERT INTO Room (room_number, HotelID, HotelChainID, problems_water, problems_electrical, problems_furniture, problems_other, price, amenities_tv, amenities_wifi, amenities_air_con, amenities_fridge, amenities_toiletries, capacities_single, capacities_double, guest_capacity, sea_view, mountain_view, extendable)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         //try to connect to the database and catch any exceptions
         try(Connection con = db.getConnection()){
@@ -125,11 +125,12 @@ public class RoomService {
             stmt.setBoolean(18, room.isMountainView());
             stmt.setBoolean(19, room.isExtendable());
 
-            //execute the query
-            stmt.executeUpdate();
-
-            //close the statement
+            int rowsAffected = stmt.executeUpdate();
             stmt.close();
+            con.close();
+            db.close();
+            return rowsAffected > 0;
+
         }catch (Exception e){
             //throw error
             throw new Exception("Error while inserting room: " + e.getMessage());

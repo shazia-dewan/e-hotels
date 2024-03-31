@@ -94,7 +94,7 @@
                                                                         <option>False</option>
                                                                 </select>
                                                 </div>
-             div class="form-group">
+             <div class="form-group">
                                                                              <label for="amenities_air_con">amenities_air_con</label>
                                                                              <select id="amenities_air_con" class="amenities_air_con">
                                                                                      <option>True</option>

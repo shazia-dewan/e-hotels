@@ -43,7 +43,7 @@ CREATE TABLE Hotel (
     city VARCHAR(100) NOT NULL,
     province VARCHAR(100) NOT NULL,
     PostalCode VARCHAR(6) NOT NULL CHECK (LENGTH(PostalCode) BETWEEN 5 AND 6),
-    phoneNumber NUMERIC(10,0) Not Null,
+    phoneNumber VARCHAR(10) Not Null,
     PRIMARY KEY (hotelID, hotelChainID),
 	FOREIGN KEY (hotelChainID)
 	REFERENCES HotelChain

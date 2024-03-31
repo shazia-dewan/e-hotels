@@ -13,7 +13,7 @@
     double star_rating = Double.parseDouble(request.getParameter("star_rating"));
     String email = request.getParameter("email");
     int num_rooms = Integer.parseInt(request.getParameter("num_rooms"));
-    int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
+    String phoneNumber = request.getParameter("phoneNumber");
 
     // Call the insertHotel method from HotelService
     Hotel hotel = new Hotel(hotelID, hotelChainID,num_rooms,email,star_rating,street,city,provinceState,postalCode,phoneNumber);

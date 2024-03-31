@@ -28,7 +28,7 @@ public class HotelService {
                         rs.getString("city"),
                         rs.getString("province"),
                         rs.getString("postal_code"),
-                        rs.getInt("phoneNumber")
+                        rs.getString("phoneNumber")
                 );
                 hotels.add(hotel);
             }
@@ -59,7 +59,7 @@ public class HotelService {
             stmt.setString(7, hotel.getCity());
             stmt.setString(8, hotel.getProvince());
             stmt.setString(9, hotel.getPostal_code());
-            stmt.setInt(10,hotel.getPhoneNumber());
+            stmt.setString(10,hotel.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();
@@ -84,7 +84,7 @@ public class HotelService {
             stmt.setString(7, hotel.getCity());
             stmt.setString(8, hotel.getProvince());
             stmt.setString(9, hotel.getPostal_code());
-            stmt.setInt(10,hotel.getPhoneNumber());
+            stmt.setString(10,hotel.getPhoneNumber());
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();

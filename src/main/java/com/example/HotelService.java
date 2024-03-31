@@ -95,13 +95,13 @@ public class HotelService {
         }
     }
 
-    public boolean deleteHotel(long hotelId) throws Exception {
-        String sql = "DELETE FROM Hotel WHERE hotel_ID=?";
+    public boolean deleteHotel(long hotelID) throws Exception {
+        String sql = "DELETE FROM Hotel WHERE hotelID=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setLong(1, hotelId);
+            stmt.setLong(1, hotelID);
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             con.close();

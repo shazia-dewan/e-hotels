@@ -200,48 +200,21 @@ public class RoomService {
      * @throws Exception when trying to connect to the database or execute the query
      */
 
-    public String deleteRoom(int roomNumber) throws Exception{
-        Connection con = null;
-        String message = "";
-
-        //SQL query to insert room
-        String deleteRoomSQL = "DELETE FROM Room WHERE room_number = ?";
-
-        //database connection object
+    public boolean deleteRoom(int room_number) throws Exception{
+        String sql = "DELETE FROM Room WHERE room_number=?";
         ConnectionDB db = new ConnectionDB();
 
-        //try to connect to database, catch any exceptions
-        try{
-            //get connection
-            con = db.getConnection();
-
-            //prepare the statement
-            PreparedStatement stmt = con.prepareStatement(deleteRoomSQL);
-
-            //set room_number for statement
-            stmt.setInt(1, roomNumber);
-
-            //execute the query
+        try (Connection con = db.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setLong(1, room_number);
             int rowsAffected = stmt.executeUpdate();
-
-            // Close the statement
             stmt.close();
-
-            // Check if any rows were affected (room deleted)
-            if (rowsAffected > 0) {
-                message = "Room with room_number " + roomNumber + " was successfully deleted!";
-            } else {
-                message = "Room with room_number " + roomNumber + " was not found!";
-            }
-        }catch(Exception e) {
-            // Throw any errors occurred
+            con.close();
+            db.close();
+            return rowsAffected > 0;
+        } catch (Exception e) {
             throw new Exception("Error while deleting room: " + e.getMessage());
-        } finally {
-            // Close the connection
-            if (con != null) con.close();
         }
-
-        return message;
 
     }
 

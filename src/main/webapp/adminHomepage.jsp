@@ -19,7 +19,7 @@
                     <a href="customerManagement.jsp" class="btn btn-success btn-lg btn-block mt-4">Customer Management</a>
                     <a href="employeeManagement.jsp" class="btn btn-success btn-lg btn-block mt-4">Employee Management</a>
                     <a href="hotelManagement.jsp" class="btn btn-success btn-lg btn-block mt-4">Hotel Management</a>
-                    <button type="button" class="btn btn-success btn-lg btn-block mt-4">Room Management</button>
+                    <a href="roomManagement.jsp" class="btn btn-success btn-lg btn-block mt-4">Room Management</a>
                 </div>
             </div>
         </div>

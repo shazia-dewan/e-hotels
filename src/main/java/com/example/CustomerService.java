@@ -60,6 +60,7 @@ public class CustomerService {
         String sql = "INSERT INTO Customer (customer_ID, street, city, province_state, postal_code_zip_code, first_name, middle_name, last_name, DateofRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?::DATE)";
         ConnectionDB db = new ConnectionDB();
 
+
         try (Connection con = db.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setLong(1, customer.getCustomerId());
@@ -78,7 +79,9 @@ public class CustomerService {
             return rowsAffected > 0;
         } catch (Exception e) {
             throw new Exception("Error while inserting customer: " + e.getMessage());
+
         }
+
     }
 
     /**
@@ -210,6 +213,7 @@ public class CustomerService {
             else {
                 return null; // Or handle this case as you see fit
             }
+
         } catch (Exception e) {
             throw new Exception("Error while fetching customer: " + e.getMessage());
         } finally {

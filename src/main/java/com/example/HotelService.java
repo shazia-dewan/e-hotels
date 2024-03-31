@@ -110,8 +110,7 @@ public class HotelService {
 
             sql.append("hotelChainID=?, ");
             parameters.add(hotel.getHotelChainID());
-            sql.append("hotelID=?, ");
-            parameters.add(hotel.getHotel_ID());
+
             sql.append("star_rating=?, ");
             parameters.add(hotel.getStar_rating());
             sql.append("num_rooms=?, ");

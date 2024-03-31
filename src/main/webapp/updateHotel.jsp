@@ -74,13 +74,13 @@
             </div>
 
             <div class="form-group">
-                <label for="provinceState">Province/State</label>
-                <input type="text" class="form-control" id="provinceState" name="provinceState" required>
+                <label for="province">Province/State</label>
+                <input type="text" class="form-control" id="province" name="province" required>
             </div>
 
             <div class="form-group">
-                <label for="postalCode">Postal Code/Zip Code</label>
-                <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+                <label for="PostalCode">Postal Code/Zip Code</label>
+                <input type="text" class="form-control" id="PostalCode" name="PostalCode" required>
             </div>
 
 

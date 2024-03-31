@@ -29,7 +29,7 @@
       <form action="updateEmployeeResults.jsp" method="get">
 
             <div class="form-group">
-                <label for="employeeID">Customer ID</label>
+                <label for="employeeID">Employee ID</label>
                 <input type="text" class="form-control" id="employeeID" name="employeeID" required>
             </div>
 
@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                <input type="text" class="form-control" id="firstName" name="firstName" >
             </div>
             <div class="form-group">
                 <label for="middleName">Middle Name</label>
@@ -58,23 +58,23 @@
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                <input type="text" class="form-control" id="lastName" name="lastName" >
             </div>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" name="street" required>
+                <input type="text" class="form-control" id="street" name="street" >
             </div>
             <div class="form-group">
                 <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city" required>
+                <input type="text" class="form-control" id="city" name="city" >
             </div>
             <div class="form-group">
                 <label for="provinceState">Province/State</label>
-                <input type="text" class="form-control" id="provinceState" name="provinceState" required>
+                <input type="text" class="form-control" id="provinceState" name="provinceState" >
             </div>
             <div class="form-group">
                 <label for="postalCode">Postal Code/Zip Code</label>
-                <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+                <input type="text" class="form-control" id="postalCode" name="postalCode" >
             </div>
             <div class="form-group">
                 <label for="Roles_chef">Roles_chef</label>

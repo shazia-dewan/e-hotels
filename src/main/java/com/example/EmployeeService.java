@@ -149,7 +149,7 @@ public class EmployeeService {
      * @throws Exception when trying to connect to the database or execute the query
      */
     public boolean updateEmployee(Employee employee) throws Exception {
-        StringBuilder sql = new StringBuilder("UPDATE Customer SET ");
+        StringBuilder sql = new StringBuilder("UPDATE Employee SET ");
         List<Object> parameters = new ArrayList<>();
         // SQL query to update employee
 

@@ -29,7 +29,7 @@
       <form action="insertEmployeeResults.jsp" method="get">
 
             <div class="form-group">
-                <label for="employeeID">Customer ID</label>
+                <label for="employeeID">Employee ID</label>
                 <input type="text" class="form-control" id="employeeID" name="employeeID" required>
             </div>
 

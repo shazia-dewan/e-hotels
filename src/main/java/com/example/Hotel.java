@@ -27,41 +27,41 @@ public class Hotel {
 
     }
 
-    private void setHotel_ID(long hotel_ID){
+    public void setHotel_ID(long hotel_ID){
         this.hotelID = hotel_ID;
     }
-    private void setHotelChainID(long hotelChainID){
+    public void setHotelChainID(long hotelChainID){
         this.hotelChainID = hotelChainID;
     }
 
-    private void setNum_rooms(Integer num_rooms){
+    public void setNum_rooms(Integer num_rooms){
         this.num_rooms = num_rooms;
     }
 
-    private void setEmail(String email){
+    public void setEmail(String email){
         this.email = email;
     }
 
-    private void setStreet(String street){
+    public void setStreet(String street){
         this.street = street;
     }
-    private void setStar_rating(double star_rating){
+    public void setStar_rating(double star_rating){
         this.star_rating = star_rating;
     }
 
-    private void setCity(String city){
+    public void setCity(String city){
         this.city = city;
     }
 
-    private void setProvince(String province){
+    public void setProvince(String province){
         this.province = province;
     }
 
-    private void setPostal_code(String postal_code){
+    public void setPostal_code(String postal_code){
         this.PostalCode = postal_code;
     }
 
-    private void setPhoneNumber(String phoneNumber){ this.phoneNumber = phoneNumber;}
+    public void setPhoneNumber(String phoneNumber){ this.phoneNumber = phoneNumber;}
 
     public long getHotel_ID(){
         return hotelID;

@@ -18,14 +18,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert Employee</title>
+    <title>Update Employee</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <!-- Include any other CSS stylesheets -->
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
     <div class="container mt-5">
-        <h2>Insert Employee</h2>
+        <h2>Update Employee</h2>
       <form action="updateEmployeeResults.jsp" method="get">
 
             <div class="form-group">

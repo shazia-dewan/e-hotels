@@ -198,9 +198,9 @@ public class EmployeeService {
             parameters.add(employee.isChef());
             sql.append("Roles_maintenanceTechnician=?, ");
             parameters.add(employee.isMaintenanceTechnician());
-            sql.append("Roles_receptionist");
+            sql.append("Roles_receptionist=?, ");
             parameters.add(employee.isReceptionist());
-            sql.append("Roles_hotelKeeper");
+            sql.append("Roles_hotelKeeper=?, ");
             parameters.add(employee.isHotelKeeper());
 
 
@@ -208,7 +208,7 @@ public class EmployeeService {
             sql.setLength(sql.length() - 2);
 
             // Add the WHERE clause
-            sql.append(" WHERE employee_ID=?");
+            sql.append(" WHERE SSN_SIN=?");
 
             // Add the employee ID parameter
             parameters.add(employee.getSsnSin());
@@ -238,14 +238,14 @@ public class EmployeeService {
         }
     }
 
-    public Employee getEmployeeFromID(long employeeId) throws Exception {
+    public Employee getEmployeeFromID(long SSN_SIN) throws Exception {
         String sql = "SELECT * FROM Employee WHERE SSN_SIN=?";
         ConnectionDB db = new ConnectionDB();
 
         try (Connection con = db.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            stmt.setLong(1, employeeId);
+            stmt.setLong(1, SSN_SIN);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

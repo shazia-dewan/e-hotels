@@ -144,58 +144,118 @@ public class RoomService {
      * @throws Exception when trying to connect to the database or execute the query
      */
 
-    public void updateRoom(Room room) throws Exception{
-        //database connection object
+    public boolean updateRoom(Room room) throws Exception {
+        StringBuilder sql = new StringBuilder("UPDATE Room SET ");
+        List<Object> parameters = new ArrayList<>();
         ConnectionDB db = new ConnectionDB();
 
-        //SQL query to insert room
-        String updateRoomSQL = "UPDATE Room SET HotelID = ? ,HotelChainID = ?, problems_water = ?, problems_electrical = ?, " +
-                "problems_furniture = ?, problems_other = ?, price = ?, amenities_tv = ?, amenities_wifi = ?," +
-                "amenities_air_con = ?, amenities_fridge = ?, amenities_toiletries = ?, capacities_single = ?," +
-                "capacities_double = ?, guest_capacity = ?, sea_view = ?, mountain_view = ?, extendable = ? " +
-                "WHERE room_number = ?";
+        try (Connection con = db.getConnection()) {
 
-        //try to connect to database, catch any exceptions
-        try(Connection con = db.getConnection()){
-            //prepare the statement
-            PreparedStatement stmt = con.prepareStatement(updateRoomSQL);
+            // Add conditions for non-empty fields
+            if (room.getHotelID() != 0) {
+                sql.append("HotelID=?, ");
+                parameters.add(room.getHotelID());
+            }
+            if (room.getHotelChainID() != 0) {
+                sql.append("HotelChainID=?, ");
+                parameters.add(room.getHotelChainID());
+            }
 
-            //set parameters for statement
-            stmt.setInt(1, room.getHotelID());
-            stmt.setInt(2, room.getHotelChainID());
-            stmt.setBoolean(3, room.isProblemsWater());
-            stmt.setBoolean(4, room.isProblemsElectrical());
-            stmt.setBoolean(5, room.isProblemsFurniture());
-            stmt.setString(6, room.getProblemsOther());
-            stmt.setDouble(7, room.getPrice());
-            stmt.setBoolean(8, room.isAmenitiesTv());
-            stmt.setBoolean(9, room.isAmenitiesWifi());
-            stmt.setBoolean(10, room.isAmenitiesAirCon());
-            stmt.setBoolean(11, room.isAmenitiesFridge());
-            stmt.setBoolean(12, room.isAmenitiesToiletries());
-            stmt.setBoolean(13, room.isCapacitySingle());
-            stmt.setBoolean(14, room.isCapacityDouble());
-            stmt.setInt(15, room.getGuestCapacity());
-            stmt.setBoolean(16, room.isSeaView());
-            stmt.setBoolean(17, room.isMountainView());
-            stmt.setBoolean(18, room.isExtendable());
-            stmt.setInt(19, room.getRoomNumber());
+                sql.append("problems_water=?, ");
+                parameters.add(room.isProblemsWater());
 
-            // Execute the query
-            stmt.executeUpdate();
 
-            // Close the statement
+                sql.append("problems_electrical=?, ");
+                parameters.add(room.isProblemsElectrical());
+
+
+                sql.append("problems_furniture=?, ");
+                parameters.add(room.isProblemsFurniture());
+
+            if (!room.getProblemsOther().isEmpty()) {
+                sql.append("problems_other=?, ");
+                parameters.add(room.getProblemsOther());
+            }
+            if (room.getPrice() != 0.0) {
+                sql.append("price=?, ");
+                parameters.add(room.getPrice());
+            }
+
+                sql.append("amenities_tv=?, ");
+                parameters.add(room.isAmenitiesTv());
+
+            sql.append("amenities_wifi=?, ");
+            parameters.add(room.isAmenitiesWifi());
+
+            sql.append("amenities_air_con=?, ");
+            parameters.add(room.isAmenitiesAirCon());
+
+            sql.append("amenities_fridge=?, ");
+            parameters.add(room.isAmenitiesFridge());
+
+            sql.append("amenities_toiletries=?, ");
+            parameters.add(room.isAmenitiesToiletries());
+
+            sql.append("capacities_single=?, ");
+            parameters.add(room.isCapacitySingle());
+
+            sql.append("capacities_double=?, ");
+            parameters.add(room.isCapacityDouble());
+
+
+            if (room.getGuestCapacity() != 0) {
+                sql.append("guest_capacity=?, ");
+                parameters.add(room.getGuestCapacity());
+            }
+
+            sql.append("sea_view=?, ");
+            parameters.add(room.isSeaView());
+
+            sql.append("mountain_view=?, ");
+            parameters.add(room.isMountainView());
+
+            sql.append("extendable=?, ");
+            parameters.add(room.isExtendable());
+
+            // Remove the last comma and space
+            sql.setLength(sql.length() - 2);
+
+            // Add the WHERE clause
+            sql.append(" WHERE room_number=?");
+
+            // Add the room number parameter
+            parameters.add(room.getRoomNumber());
+
+            // Prepare the statement
+            PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+            // Set parameter values
+            int index = 1;
+            for (Object parameter : parameters) {
+                stmt.setObject(index++, parameter);
+            }
+
+            // Execute the update
+            int rowsAffected = stmt.executeUpdate();
+
+            // Close resources
             stmt.close();
-        }catch (Exception e) {
-            // Throw any errors occurred
+            con.close();
+            db.close();
+
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
             throw new Exception("Error while updating room: " + e.getMessage());
         }
     }
 
+
+
     /**
      * Method to delete a room from the database by room number
      *
-     * @param roomNumber the room_number of the room to be deleted
+     * @param room_number the room_number of the room to be deleted
      * @return a string message indicating whether the room was successfully deleted
      * @throws Exception when trying to connect to the database or execute the query
      */
@@ -328,5 +388,50 @@ public class RoomService {
         // Return the list of rooms
         return rooms;
     }
+
+    public Room getRoomFromID(int roomNumber) throws Exception {
+        String sql = "SELECT * FROM Room WHERE room_number=?";
+        ConnectionDB db = new ConnectionDB();
+
+        try (Connection con = db.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, roomNumber);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Room room = new Room(
+                        rs.getInt("room_number"),
+                        rs.getInt("HotelID"),
+                        rs.getInt("HotelChainID"),
+                        rs.getBoolean("problems_water"),
+                        rs.getBoolean("problems_electrical"),
+                        rs.getBoolean("problems_furniture"),
+                        rs.getString("problems_other"),
+                        rs.getDouble("price"),
+                        rs.getBoolean("amenities_tv"),
+                        rs.getBoolean("amenities_wifi"),
+                        rs.getBoolean("amenities_air_con"),
+                        rs.getBoolean("amenities_fridge"),
+                        rs.getBoolean("amenities_toiletries"),
+                        rs.getBoolean("capacities_single"),
+                        rs.getBoolean("capacities_double"),
+                        rs.getInt("guest_capacity"),
+                        rs.getBoolean("sea_view"),
+                        rs.getBoolean("mountain_view"),
+                        rs.getBoolean("extendable")
+                );
+                return room;
+            } else {
+                return null; // Or handle this case as you see fit
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Error while fetching room: " + e.getMessage());
+        } finally {
+            db.close(); // Ensure the database connection is closed
+        }
+    }
+
 
 }

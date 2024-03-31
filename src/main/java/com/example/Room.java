@@ -199,7 +199,7 @@ public class Room {
         return guest_capacity;
     }
 
-    public void setguest_capacity(int guest_capacity) {
+    public void setGuestCapacity(int guest_capacity) {
         this.guest_capacity = guest_capacity;
     }
 

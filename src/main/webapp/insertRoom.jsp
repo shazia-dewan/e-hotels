@@ -29,8 +29,8 @@
       <form action="insertRoomResults.jsp" method="get">
 
              <div class="form-group">
-                            <label for="roomNum">Room Number</label>
-                            <input type="text" class="form-control" id="roomNum" name="roomNum" required>
+                            <label for="roomNumber">Room Number</label>
+                            <input type="text" class="form-control" id="roomNumber" name="roomNumber" required>
                         </div>
 
             <div class="form-group">
@@ -96,7 +96,7 @@
                                                                         <option>False</option>
                                                                 </select>
                                                 </div>
-             div class="form-group">
+             <div class="form-group">
                                                                              <label for="amenities_air_con">amenities_air_con</label>
                                                                              <select id="amenities_air_con" class="amenities_air_con">
                                                                                      <option>True</option>
@@ -181,19 +181,3 @@
 
 </body>
 </html>
-problems_water; //indicates if the room has water problems
-    private boolean problems_electrical; //indicates if the room has electrical problems
-    private boolean problems_furniture; //indicates if the room has furniture problems
-    private String problems_other; //other problems with the room
-    private double price; //price of the room
-    private boolean amenities_tv; //indicates if a tv is included in the room
-    private boolean amenities_wifi; //indicates if Wi-fi is included in the room
-    private boolean amenities_air_con; //indicates if air conditioning is included in the room
-    private boolean amenities_fridge; //indicates if a fridge is included in the room
-    private boolean amenities_toiletries; //indicates if toiletries are included in the room
-    private boolean capacities_single; //indicates if the capacity is single (1 bed)
-    private boolean capacities_double; //indicates if the capacity is double (2 beds)
-    private int guest_capacity; //the guest capacity of the room
-    private boolean sea_view; //indicates if the room has a sea view
-    private boolean mountain_view; //indicates if the room has a mountain view
-    private boolean extendable;
